@@ -1,4 +1,5 @@
 using KittensApi.DAL;
+using KittensApi.DAL.Repository;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,7 @@ namespace KittensApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextFactory<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddSingleton<IKittensRepository, KittensRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
