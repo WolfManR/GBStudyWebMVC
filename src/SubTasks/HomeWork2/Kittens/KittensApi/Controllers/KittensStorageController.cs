@@ -10,6 +10,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KittensApi.Controllers
 {
@@ -27,15 +28,16 @@ namespace KittensApi.Controllers
         }
 
         [HttpPost]
-        public void Create(KittenCreateRequest request)
+        public async Task CreateAsync(KittenCreateRequest request)
         {
-            kittensRepository.Add(mapper.Map<Kitten>(request));
+            await kittensRepository.Add(mapper.Map<Kitten>(request));
         }
 
         [HttpGet]
-        public IEnumerable<KittenGetResponse> Get()
+        public async Task<IEnumerable<KittenGetResponse>> GetAsync()
         {
-            return kittensRepository.Get().Adapt<IEnumerable<KittenGetResponse>>();
+            var data = await kittensRepository.Get();
+            return data.Adapt<List<KittenGetResponse>>();
         }
     }
 }
