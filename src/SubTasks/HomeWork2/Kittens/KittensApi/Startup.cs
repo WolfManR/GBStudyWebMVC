@@ -1,6 +1,10 @@
 using KittensApi.DAL;
 using KittensApi.DAL.Repository;
 
+using Mapster;
+
+using MapsterMapper;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +25,10 @@ namespace KittensApi
         {
             services.AddDbContextFactory<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddSingleton<IKittensRepository, KittensRepository>();
+
+            TypeAdapterConfig.GlobalSettings.Scan(typeof(Startup).Assembly);
+            services.AddScoped<IMapper, Mapper>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
