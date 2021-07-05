@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,14 +9,12 @@ using System.Collections.Concurrent;
 using System.Collections.Immutable;
 
 const string PathToFile = "result.json";
-const string ApiUrl = "https://jsonplaceholder.typicode.com";
 
 try
 {
-    PostsLoaderService.InitializeClient(ApiUrl);
     var posts = await PostsLoaderService.LoadPostsAsync(4, 13);
 
-    await SaveToFileHandler.SaveToFileAsync(PathToFile, posts.ToImmutableArray());
+    SaveToFileHandler.SaveToFile(PathToFile, posts.ToImmutableArray());
 
     Console.WriteLine("Posts loaded and saved to file result.txt");
 
@@ -36,21 +33,23 @@ catch (Exception e)
 
 static class PostsLoaderService
 {
-    private static HttpClient Client;
-    private static readonly JsonSerializerOptions Options = new(JsonSerializerDefaults.Web);
-    private static readonly Lazy<ConcurrentBag<int>> FailLoad = new();
+    private static readonly HttpClient Client;
+    private static readonly JsonSerializerOptions Options;
+    private static readonly Lazy<ConcurrentBag<int>> FailLoad;
 
-    public static void InitializeClient(string baseApiUrl)
+    static PostsLoaderService()
     {
-        Client = new HttpClient() { BaseAddress = new Uri(baseApiUrl) };
-        Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Options = new(JsonSerializerDefaults.Web);
+        FailLoad = new();
+        Client = new();
+        Client.DefaultRequestHeaders.Accept.Add(new("application/json"));
     }
 
     public static async Task<IEnumerable<Post>> LoadPostsAsync(int from, int to)
     {
         if (from > to || from < 1 || to < 1)
             throw new InvalidOperationException("From must be lower then To, and both must be greater than 1");
-        var toAwait = Enumerable.Range(from, to).Select(GetPost);
+        var toAwait = Enumerable.Range(from, to).Select(GetPost).ToArray();
         var tasks = Task.WhenAll(toAwait);
         try
         {
@@ -71,7 +70,7 @@ static class PostsLoaderService
         try
         {
             if (id is 5 or 6) throw new InvalidOperationException("Fail");
-            var json = await Client.GetStringAsync($"posts/{id}");
+            var json = await Client.GetStringAsync($"https://jsonplaceholder.typicode.com/posts/{id}");
             return JsonSerializer.Deserialize<Post>(json, Options);
         }
         catch
@@ -84,10 +83,10 @@ static class PostsLoaderService
 
 static class SaveToFileHandler
 {
-    public static async Task SaveToFileAsync(string pathToFile, ImmutableArray<Post> data)
+    public static void SaveToFile(string pathToFile, ImmutableArray<Post> data)
     {
-        await using var stream = GetFileStream(pathToFile);
-        await using var writer = new StreamWriter(stream) { AutoFlush = true };
+        using var stream = GetFileStream(pathToFile);
+        using var writer = new StreamWriter(stream) { AutoFlush = true };
         
         for (int i = 0; i < data.Length; i++)
         {
