@@ -1,9 +1,7 @@
-﻿using KittensApi.Models;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KittensApi.DAL.Repository
+namespace DataBase.Repository
 {
     public interface IKittensRepository
     {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-
 using Microsoft.EntityFrameworkCore;
 
-namespace KittensApi.DAL
+namespace DataBase.EF
 {
     // TODO: Change behavior to use Expression Tree
     public static class EntityFrameworkExtensions

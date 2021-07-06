@@ -1,7 +1,6 @@
-﻿using KittensApi.Controllers.Requests;
+﻿using DataBase;
+using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
-using KittensApi.Models;
-
 using Mapster;
 
 namespace KittensApi.Maps

@@ -1,9 +1,7 @@
-﻿using KittensApi.Models;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace KittensApi.DAL.Configurations
+namespace DataBase.Configurations
 {
     public class KittensConfiguration : IEntityTypeConfiguration<Kitten>
     {

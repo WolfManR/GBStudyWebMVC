@@ -1,10 +1,7 @@
-﻿using KittensApi.Models;
-
+﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
-using System.Reflection;
-
-namespace KittensApi.DAL
+namespace DataBase.EF
 {
     public class KittensContext : DbContext
     {

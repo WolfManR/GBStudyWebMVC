@@ -1,8 +1,5 @@
 ﻿using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
-using KittensApi.DAL.Repository;
-using KittensApi.Models;
-
 using Mapster;
 
 using MapsterMapper;
@@ -11,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataBase;
+using DataBase.Repository;
 
 namespace KittensApi.Controllers
 {

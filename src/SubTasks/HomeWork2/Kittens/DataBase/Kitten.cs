@@ -1,4 +1,4 @@
-﻿namespace KittensApi.Models
+﻿namespace DataBase
 {
     public class Kitten
     {
