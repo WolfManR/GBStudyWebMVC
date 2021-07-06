@@ -12,7 +12,8 @@ const string PathToFile = "result.json";
 
 try
 {
-    var posts = await PostsLoaderService.LoadPostsAsync(4, 13);
+    using var postsLoader = new PostsLoaderService();
+    var posts = await postsLoader.LoadPostsAsync(4, 13);
 
     SaveToFileHandler.SaveToFile(PathToFile, posts.ToImmutableArray());
 
@@ -31,7 +32,7 @@ catch (Exception e)
 
 // Helpers
 
-static class PostsLoaderService
+class PostsLoaderService : IDisposable
 {
     private static readonly HttpClient Client;
     private static readonly JsonSerializerOptions Options;
@@ -41,12 +42,13 @@ static class PostsLoaderService
     {
         Options = new(JsonSerializerDefaults.Web);
         FailLoad = new();
-        Client = new();
+        Client = new(new SocketsHttpHandler(), true);
         Client.DefaultRequestHeaders.Accept.Add(new("application/json"));
     }
 
-    public static async Task<IEnumerable<Post>> LoadPostsAsync(int from, int to)
+    public async Task<IEnumerable<Post>> LoadPostsAsync(int from, int to)
     {
+        if (disposedValue) throw new InvalidOperationException("Service already disposed");
         if (from > to || from < 1 || to < 1)
             throw new InvalidOperationException("From must be lower then To, and both must be greater than 1");
         var toAwait = Enumerable.Range(from, to).Select(GetPost).ToArray();
@@ -65,7 +67,7 @@ static class PostsLoaderService
         return toAwait.Where(x => !x.IsFaulted).Select(x => x.Result);
     }
     
-    private static async Task<Post> GetPost(int id)
+    private async Task<Post> GetPost(int id)
     {
         try
         {
@@ -79,6 +81,42 @@ static class PostsLoaderService
             throw;
         }
     }
+
+    #region Full Dispose pattern
+
+    private bool disposedValue;
+
+    private void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                // TODO: dispose managed state (managed objects)
+                Client.Dispose();
+            }
+
+            // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            // TODO: set large fields to null
+            disposedValue = true;
+        }
+    }
+
+    // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+    // ~PostsLoaderService()
+    // {
+    //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+    //     Dispose(disposing: false);
+    // }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    } 
+
+    #endregion
 }
 
 static class SaveToFileHandler
