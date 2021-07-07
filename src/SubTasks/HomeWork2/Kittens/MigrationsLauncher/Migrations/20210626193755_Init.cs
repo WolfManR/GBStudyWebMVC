@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace KittensApi.Migrations
+namespace MigrationsLauncher.Migrations
 {
     public partial class Init : Migration
     {
