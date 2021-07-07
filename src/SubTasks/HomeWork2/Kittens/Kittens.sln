@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase", "DataBase\DataBa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{3DB8B635-5CCD-4088-8370-59BFC03F4BEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsLauncher", "MigrationsLauncher\MigrationsLauncher.csproj", "{BA869980-1EBA-44FD-B61D-9EAB8CAE804C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsLauncher", "MigrationsLauncher\MigrationsLauncher.csproj", "{BA869980-1EBA-44FD-B61D-9EAB8CAE804C}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{BA869980-1EBA-44FD-B61D-9EAB8CAE804C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA869980-1EBA-44FD-B61D-9EAB8CAE804C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA869980-1EBA-44FD-B61D-9EAB8CAE804C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

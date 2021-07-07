@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MigrationsLauncher": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
