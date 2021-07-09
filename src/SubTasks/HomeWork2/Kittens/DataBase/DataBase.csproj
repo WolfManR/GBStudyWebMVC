@@ -12,4 +12,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer.Abstractions\DataLayer.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

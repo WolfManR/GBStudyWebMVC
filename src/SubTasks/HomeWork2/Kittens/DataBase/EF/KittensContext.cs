@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using DataLayer.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.EF

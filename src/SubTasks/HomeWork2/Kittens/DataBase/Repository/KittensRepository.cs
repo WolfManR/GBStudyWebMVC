@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataBase.EF;
+using DataLayer.Abstractions.Entities;
+using DataLayer.Abstractions.Repositories;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DataBase.Repository
