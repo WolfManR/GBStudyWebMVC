@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsLauncher", "Migra
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer.Abstractions", "DataLayer.Abstractions\DataLayer.Abstractions.csproj", "{D165B316-B4D3-4019-9C68-EB905A325388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D165B316-B4D3-4019-9C68-EB905A325388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D165B316-B4D3-4019-9C68-EB905A325388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D165B316-B4D3-4019-9C68-EB905A325388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D165B316-B4D3-4019-9C68-EB905A325388}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{417482B1-C7BB-4C3D-B35D-D407C005ABEC} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 		{BA869980-1EBA-44FD-B61D-9EAB8CAE804C} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
+		{D165B316-B4D3-4019-9C68-EB905A325388} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}

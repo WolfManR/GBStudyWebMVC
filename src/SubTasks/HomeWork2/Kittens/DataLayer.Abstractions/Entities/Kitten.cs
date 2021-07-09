@@ -1,4 +1,4 @@
-﻿namespace DataBase
+﻿namespace DataLayer.Abstractions.Entities
 {
     public class Kitten
     {
