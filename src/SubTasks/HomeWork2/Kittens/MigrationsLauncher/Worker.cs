@@ -9,15 +9,19 @@ namespace MigrationsLauncher
 {
     public class Worker : IHostedService
     {
-        private readonly KittensContext _context;
+        private readonly IDbContextFactory<KittensContext> _contextFactory;
 
-        public Worker(KittensContext context) => _context = context;
+        public Worker(IDbContextFactory<KittensContext> contextFactory)
+        {
+            _contextFactory = contextFactory;
+        }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            if ((await _context.Database.GetPendingMigrationsAsync(cancellationToken)).Any())
+            await using var context = _contextFactory.CreateDbContext();
+            if ((await context.Database.GetPendingMigrationsAsync(cancellationToken)).Any())
             {
-                await _context.Database.MigrateAsync(cancellationToken);
+                await context.Database.MigrateAsync(cancellationToken);
             }
         }
 

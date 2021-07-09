@@ -19,7 +19,7 @@ namespace MigrationsLauncher
 
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
-            services.AddDbContext<KittensContext>(options =>
+            services.AddDbContextFactory<KittensContext>(options =>
                 options
                     .UseNpgsql(
                         host.Configuration.GetConnectionString("Default"),
@@ -31,8 +31,7 @@ namespace MigrationsLauncher
                             .AddFilter((category, logLevel) =>
                                 category == DbLoggerCategory.Database.Command.Name &&
                                 logLevel == LogLevel.Information);
-                    })), 
-                ServiceLifetime.Singleton);
+                    })));
             services.AddHostedService<Worker>();
         }
     }
