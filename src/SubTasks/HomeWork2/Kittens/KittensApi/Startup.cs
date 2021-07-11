@@ -1,5 +1,6 @@
+using BusinessLayer;
+using DataBase;
 using DataBase.EF;
-using DataBase.Repository;
 using Mapster;
 
 using MapsterMapper;
@@ -23,7 +24,9 @@ namespace KittensApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextFactory<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
-            services.AddSingleton<IKittensRepository, KittensRepository>();
+            services
+                .AddDataLayer()
+                .AddBusinessLayer();
 
             TypeAdapterConfig.GlobalSettings.Scan(typeof(Startup).Assembly);
             services.AddScoped<IMapper, Mapper>();

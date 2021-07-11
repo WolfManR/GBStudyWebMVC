@@ -1,6 +1,7 @@
-﻿using DataBase;
+﻿using BusinessLayer.Abstractions.Models;
 using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
+
 using Mapster;
 
 namespace KittensApi.Maps

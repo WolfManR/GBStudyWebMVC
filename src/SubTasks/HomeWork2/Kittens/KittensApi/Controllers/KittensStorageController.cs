@@ -1,15 +1,13 @@
 ﻿using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
-using Mapster;
-
 using MapsterMapper;
 
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataBase;
-using DataBase.Repository;
+using BusinessLayer.Abstractions.Models;
+using BusinessLayer.Abstractions.Services;
 
 namespace KittensApi.Controllers
 {
@@ -17,26 +15,26 @@ namespace KittensApi.Controllers
     [ApiController]
     public class KittensStorageController : ControllerBase
     {
-        private readonly IKittensRepository kittensRepository;
-        private readonly IMapper mapper;
+        private readonly IKittensService _kittensService;
+        private readonly IMapper _mapper;
 
-        public KittensStorageController(IKittensRepository kittensRepository, IMapper mapper)
+        public KittensStorageController(IKittensService kittensService, IMapper mapper)
         {
-            this.kittensRepository = kittensRepository;
-            this.mapper = mapper;
+            _kittensService = kittensService;
+            this._mapper = mapper;
         }
 
         [HttpPost]
         public async Task CreateAsync(KittenCreateRequest request)
         {
-            await kittensRepository.Add(mapper.Map<Kitten>(request));
+            await _kittensService.Add(_mapper.Map<Kitten>(request));
         }
 
         [HttpGet]
         public async Task<IEnumerable<KittenGetResponse>> GetAsync()
         {
-            var data = await kittensRepository.Get();
-            return data.Adapt<List<KittenGetResponse>>();
+            var data = await _kittensService.Get();
+            return _mapper.Map<List<KittenGetResponse>>(data);
         }
     }
 }
