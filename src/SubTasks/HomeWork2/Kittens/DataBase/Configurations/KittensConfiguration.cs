@@ -1,4 +1,4 @@
-﻿using DataLayer.Abstractions.Entities;
+﻿using DataBase.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

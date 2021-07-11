@@ -13,11 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsLauncher", "Migra
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4C10B055-8166-4F1B-BC3E-DA2045CE3B97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer.Abstractions", "DataLayer.Abstractions\DataLayer.Abstractions.csproj", "{D165B316-B4D3-4019-9C68-EB905A325388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer.Abstractions", "DataLayer.Abstractions\DataLayer.Abstractions.csproj", "{D165B316-B4D3-4019-9C68-EB905A325388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{8DBE0CA5-11A7-4102-AEBD-83CDD9B6B0C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{8DBE0CA5-11A7-4102-AEBD-83CDD9B6B0C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer.Abstractions", "BusinessLayer.Abstractions\BusinessLayer.Abstractions.csproj", "{1EF6A533-E18A-4572-B67B-A848527500DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer.Abstractions", "BusinessLayer.Abstractions\BusinessLayer.Abstractions.csproj", "{1EF6A533-E18A-4572-B67B-A848527500DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{28610157-0C88-4B08-802B-C6485B61FB34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase.Abstractions", "DataBase.Abstractions\DataBase.Abstractions.csproj", "{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,14 @@ Global
 		{1EF6A533-E18A-4572-B67B-A848527500DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EF6A533-E18A-4572-B67B-A848527500DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EF6A533-E18A-4572-B67B-A848527500DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28610157-0C88-4B08-802B-C6485B61FB34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28610157-0C88-4B08-802B-C6485B61FB34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28610157-0C88-4B08-802B-C6485B61FB34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28610157-0C88-4B08-802B-C6485B61FB34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +75,8 @@ Global
 		{D165B316-B4D3-4019-9C68-EB905A325388} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 		{8DBE0CA5-11A7-4102-AEBD-83CDD9B6B0C1} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 		{1EF6A533-E18A-4572-B67B-A848527500DE} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
+		{28610157-0C88-4B08-802B-C6485B61FB34} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
+		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}

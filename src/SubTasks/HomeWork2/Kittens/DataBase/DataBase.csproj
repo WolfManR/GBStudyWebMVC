@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataLayer.Abstractions\DataLayer.Abstractions.csproj" />
+    <ProjectReference Include="..\DataBase.Abstractions\DataBase.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

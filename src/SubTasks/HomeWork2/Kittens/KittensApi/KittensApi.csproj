@@ -18,6 +18,7 @@
     <ProjectReference Include="..\BusinessLayer.Abstractions\BusinessLayer.Abstractions.csproj" />
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\DataBase\DataBase.csproj" />
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
   </ItemGroup>
 
 </Project>
