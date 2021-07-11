@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BusinessLayer.Abstractions\BusinessLayer.Abstractions.csproj" />
+    <ProjectReference Include="..\DataLayer.Abstractions\DataLayer.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
