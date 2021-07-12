@@ -8,5 +8,7 @@ namespace BusinessLayer.Abstractions.Services
     {
         Task<IReadOnlyCollection<Kitten>> Get();
         Task Add(Kitten kitten);
+        Task Update(Kitten kitten);
+        Task Delete(int id);
     }
 }

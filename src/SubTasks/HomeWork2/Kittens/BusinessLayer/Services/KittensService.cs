@@ -29,5 +29,15 @@ namespace BusinessLayer.Services
         {
             return _repository.Add(_mapper.Map<KittenData>(kitten));
         }
+
+        public Task Update(Kitten kitten)
+        {
+            return _repository.Update(_mapper.Map<KittenData>(kitten));
+        }
+
+        public Task Delete(int id)
+        {
+            return _repository.Delete(id);
+        }
     }
 }
