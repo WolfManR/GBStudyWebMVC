@@ -1,6 +1,6 @@
 ﻿namespace DataLayer.Abstractions.Filters
 {
-    public class KittenSearchFilterData
+    public class KittenSearchFilterData : SearchFilterData
     {
         public string Nickname { get; init; }
     }

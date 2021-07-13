@@ -65,7 +65,7 @@ namespace DataLayer.Repository
 
             if (searchFilter is not null)
             {
-                query = query.SearchWith(new KittenSearchFilter{Data = searchFilter });
+                query = query.SearchWith(new KittenSearchFilter{ Data = searchFilter });
             }
 
             return await query.ProjectToType<Kitten>().ToListAsync();

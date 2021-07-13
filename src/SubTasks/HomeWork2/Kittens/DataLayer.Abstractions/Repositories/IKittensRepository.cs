@@ -10,7 +10,7 @@ namespace DataLayer.Abstractions.Repositories
         Task Add(Kitten kitten);
         Task Delete(int id);
         Task<List<Kitten>> Get();
-        Task<IEnumerable<Kitten>> GetFiltered(PageFilter pageFilter = default, KittenSearchFilterData searchFilter = null);
+        Task<IEnumerable<Kitten>> GetFiltered(PageFilter pageFilter = default, KittenSearchFilterData searchFilterData = null);
         Task Update(Kitten kitten);
     }
 }

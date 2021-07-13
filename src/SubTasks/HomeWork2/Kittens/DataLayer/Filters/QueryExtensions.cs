@@ -10,7 +10,7 @@ namespace DataLayer.Filters
             return query.Skip(filter.Page * filter.Size).Take(filter.Size);
         }
 
-        public static IQueryable<T> SearchWith<T>(this IQueryable<T> query, SearchFilter<T> filter)
+        public static IQueryable<T> SearchWith<T, TData>(this IQueryable<T> query, SearchFilter<T, TData> filter) where TData : SearchFilterData
         {
             return query.Where(filter.Inject());
         }
