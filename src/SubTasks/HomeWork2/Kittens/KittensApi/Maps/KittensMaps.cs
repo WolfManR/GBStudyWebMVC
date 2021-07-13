@@ -12,6 +12,8 @@ namespace KittensApi.Maps
         {
             config.ForType<KittenCreateRequest, Kitten>().TwoWays();
             config.ForType<Kitten, KittenGetResponse>().TwoWays();
+            config.ForType<KittenUpdateRequest, Kitten>();
+            config.ForType<KittenSearchRequest, KittenSearchData>();
         }
     }
 }

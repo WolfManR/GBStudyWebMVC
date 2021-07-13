@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
 using BusinessLayer.Abstractions.Services;
@@ -50,21 +51,24 @@ namespace KittensApi.Controllers
         }
 
         [HttpGet("{size:int}/{page:int}")]
-        public async Task GetPageAsync([FromRoute] int size, [FromRoute] int page)
+        public async Task<IEnumerable<KittenGetResponse>> GetPageAsync([FromRoute] int size, [FromRoute] int page)
         {
-
+            var data = await _kittensService.GetPage(page, size);
+            return data.Select(_mapper.Map<KittenGetResponse>);
         }
 
         [HttpGet]
-        public async Task GetWithSearchAsync([FromQuery] string search)
+        public async Task<IEnumerable<KittenGetResponse>> GetWithSearchAsync([FromQuery] KittenSearchRequest searchRequest)
         {
-
+            var data = await _kittensService.SearchFor(_mapper.Map<KittenSearchData>(searchRequest));
+            return data.Select(_mapper.Map<KittenGetResponse>);
         }
 
         [HttpGet("{size:int}/{page:int}")]
-        public async Task GetPageWithSearchAsync([FromRoute] int size, [FromRoute] int page, [FromQuery] string search)
+        public async Task<IEnumerable<KittenGetResponse>> GetPageWithSearchAsync([FromRoute] int size, [FromRoute] int page, [FromQuery] KittenSearchRequest searchRequest)
         {
-
+            var data = await _kittensService.GetPageFromSearch(page, size, _mapper.Map<KittenSearchData>(searchRequest));
+            return data.Select(_mapper.Map<KittenGetResponse>);
         }
     }
 }
