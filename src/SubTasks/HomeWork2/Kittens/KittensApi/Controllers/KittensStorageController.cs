@@ -50,21 +50,21 @@ namespace KittensApi.Controllers
             return _mapper.Map<List<KittenGetResponse>>(data);
         }
 
-        [HttpGet("{size:int}/{page:int}")]
+        [HttpGet("/page/{page:int}pagesize/{size:int}")]
         public async Task<IEnumerable<KittenGetResponse>> GetPageAsync([FromRoute] int size, [FromRoute] int page)
         {
             var data = await _kittensService.GetPage(page, size);
             return data.Select(_mapper.Map<KittenGetResponse>);
         }
 
-        [HttpGet]
+        [HttpGet("search")]
         public async Task<IEnumerable<KittenGetResponse>> GetWithSearchAsync([FromQuery] KittenSearchRequest searchRequest)
         {
             var data = await _kittensService.SearchFor(_mapper.Map<KittenSearchData>(searchRequest));
             return data.Select(_mapper.Map<KittenGetResponse>);
         }
 
-        [HttpGet("{size:int}/{page:int}")]
+        [HttpGet("/page/{page:int}pagesize/{size:int}/search")]
         public async Task<IEnumerable<KittenGetResponse>> GetPageWithSearchAsync([FromRoute] int size, [FromRoute] int page, [FromQuery] KittenSearchRequest searchRequest)
         {
             var data = await _kittensService.GetPageFromSearch(page, size, _mapper.Map<KittenSearchData>(searchRequest));
