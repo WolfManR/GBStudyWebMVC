@@ -7,6 +7,6 @@ namespace DataLayer.Filters
 {
     public class KittenSearchFilter : SearchFilter<Kitten, KittenSearchFilterData>
     {
-        public override Expression<Func<Kitten, bool>> Inject() => arg => arg.Nickname.Equals(Data.Nickname, StringComparison.OrdinalIgnoreCase);
+        public override Expression<Func<Kitten, bool>> Inject() => arg => arg.Nickname.ToLower().Equals(Data.Nickname.ToLower());
     }
 }

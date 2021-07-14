@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DataBase.EF;
@@ -60,14 +61,14 @@ namespace DataLayer.Repository
 
             if (pageFilter != PageFilter.Empty())
             {
-                query = query.GetPage(pageFilter);
+                query = query.GetPage(pageFilter).OrderByDescending(k => k.Id);
             }
 
             if (searchFilter is not null)
             {
                 query = query.SearchWith(new KittenSearchFilter{ Data = searchFilter });
             }
-
+            
             return await query.ProjectToType<Kitten>().ToListAsync();
         }
     }
