@@ -10,54 +10,28 @@ using MapsterMapper;
 
 namespace BusinessLayer.Services
 {
-    public class KittensService : IKittensService
+    public class KittensService : Service<Kitten, KittenData, int, IKittensRepository>, IKittensService
     {
-        private readonly IKittensRepository _repository;
-        private readonly IMapper _mapper;
-
-        public KittensService(IKittensRepository repository, IMapper mapper)
+        public KittensService(IKittensRepository repository, IMapper mapper) : base(repository, mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
-
-        public async Task<IReadOnlyCollection<Kitten>> Get()
-        {
-            var data = await _repository.Get();
-            return _mapper.Map<List<Kitten>>(data);
-        }
-
-        public Task Add(Kitten kitten)
-        {
-            return _repository.Add(_mapper.Map<KittenData>(kitten));
-        }
-
-        public Task Update(Kitten kitten)
-        {
-            return _repository.Update(_mapper.Map<KittenData>(kitten));
-        }
-
-        public Task Delete(int id)
-        {
-            return _repository.Delete(id);
         }
 
         public async Task<IReadOnlyCollection<Kitten>> GetPage(int page, int pageSize)
         {
-            var data = await _repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize });
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize });
+            return data.Select(Mapper.Map<Kitten>).ToList();
         }
 
         public async Task<IReadOnlyCollection<Kitten>> SearchFor(KittenSearchData searchData)
         {
-            var data = await _repository.GetFiltered(searchFilterData: _mapper.Map<KittenSearchFilterData>(searchData));
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(searchFilterData: Mapper.Map<KittenSearchFilterData>(searchData));
+            return data.Select(Mapper.Map<Kitten>).ToList();
         }
 
         public async Task<IReadOnlyCollection<Kitten>> GetPageFromSearch(int page, int pageSize, KittenSearchData searchData)
         {
-            var data = await _repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize }, _mapper.Map<KittenSearchFilterData>(searchData));
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize }, Mapper.Map<KittenSearchFilterData>(searchData));
+            return data.Select(Mapper.Map<Kitten>).ToList();
         }
     }
 }
