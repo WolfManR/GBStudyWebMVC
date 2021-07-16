@@ -12,7 +12,8 @@ namespace DataLayer
         public static IServiceCollection AddDataLayer(this IServiceCollection services)
         {
             services.AddTransient<IKittensRepository, KittensRepository>();
-            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps());
+            services.AddTransient<IClinicsRepository, ClinicsRepository>();
+            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicMaps());
             return services;
         }
     }
