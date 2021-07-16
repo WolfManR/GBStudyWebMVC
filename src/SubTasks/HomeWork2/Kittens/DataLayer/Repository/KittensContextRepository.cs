@@ -6,10 +6,11 @@ using DataBase.EF;
 using DataLayer.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Mapster;
+using dbEntities = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Repository
 {
-    public abstract class KittensContextRepository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : IEntity<TId>
+    public abstract class KittensContextRepository<TEntity, TDbEntity, TId> : IRepository<TEntity, TId> where TEntity : IEntity<TId> where TDbEntity : class, dbEntities::IEntity<TId>
     {
         protected readonly IDbContextFactory<KittensContext> ContextFactory;
 
@@ -18,7 +19,7 @@ namespace DataLayer.Repository
         public async Task<IEnumerable<TEntity>> Get()
         {
             await using var context = ContextFactory.CreateDbContext();
-            return await context.Kittens.ProjectToType<TEntity>().ToListAsync();
+            return await context.Set<TDbEntity>().ProjectToType<TEntity>().ToListAsync();
         }
 
         public async Task Add(TEntity entity)
@@ -31,7 +32,7 @@ namespace DataLayer.Repository
         public async Task Delete(TId id)
         {
             await using var context = ContextFactory.CreateDbContext();
-            var entity = await context.Kittens.FirstOrDefaultAsync(e => Equals(e.Id, id));
+            var entity = await context.Set<TDbEntity>().FirstOrDefaultAsync(e => Equals(e.Id, id));
             if (entity is null) return;
             context.Entry(entity).State = EntityState.Deleted;
             await context.SaveChangesAsync().ConfigureAwait(false);

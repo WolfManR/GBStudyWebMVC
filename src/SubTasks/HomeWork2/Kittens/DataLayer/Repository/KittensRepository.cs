@@ -14,11 +14,11 @@ using Mapster;
 
 using Microsoft.EntityFrameworkCore;
 
-using KittenSearchFilter = DataLayer.Filters.KittenSearchFilter;
+using dbEntities = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Repository
 {
-    public class KittensRepository : KittensContextRepository<Kitten, int>, IKittensRepository
+    public class KittensRepository : KittensContextRepository<Kitten, dbEntities::Kitten, int>, IKittensRepository
     {
         public KittensRepository(IDbContextFactory<KittensContext> contextFactory) : base(contextFactory) {}
         
