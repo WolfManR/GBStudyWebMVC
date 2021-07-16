@@ -9,6 +9,7 @@ namespace DataBase.EF
         public KittensContext(DbContextOptions<KittensContext> options) : base(options) { }
 
         public DbSet<Kitten> Kittens { get; set; }
+        public DbSet<Clinic> Clinics { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
