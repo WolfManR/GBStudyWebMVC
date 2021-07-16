@@ -11,10 +11,10 @@ using dbEntities = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Repository
 {
-    public class ClinicRepository : KittensContextRepository<Clinic, dbEntities::Clinic, int>, IClinicRepository
+    public class ClinicsRepository : KittensContextRepository<Clinic, dbEntities::Clinic, int>, IClinicsRepository
     {
         private readonly IMapper _mapper;
-        public ClinicRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory)
+        public ClinicsRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory)
         {
             _mapper = mapper;
         }

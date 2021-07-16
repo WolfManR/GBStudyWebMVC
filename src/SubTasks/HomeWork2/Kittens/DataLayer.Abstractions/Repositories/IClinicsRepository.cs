@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Abstractions.Repositories
 {
-    public interface IClinicRepository : IRepository<Clinic, int>
+    public interface IClinicsRepository : IRepository<Clinic, int>
     {
         Task<IEnumerable<Kitten>> ListKittensInClinic(int clinicId);
         Task RegisterKittenInClinic(int clinicId, int kittenId);
