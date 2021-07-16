@@ -5,12 +5,8 @@ using DataLayer.Abstractions.Filters;
 
 namespace DataLayer.Abstractions.Repositories
 {
-    public interface IKittensRepository
+    public interface IKittensRepository : IRepository<Kitten, int>
     {
-        Task Add(Kitten kitten);
-        Task Delete(int id);
-        Task<List<Kitten>> Get();
         Task<IEnumerable<Kitten>> GetFiltered(PageFilter pageFilter = default, KittenSearchFilterData searchFilterData = null);
-        Task Update(Kitten kitten);
     }
 }
