@@ -1,4 +1,6 @@
-﻿namespace DataBase.Abstractions.Entities
+﻿using System.Collections.Generic;
+
+namespace DataBase.Abstractions.Entities
 {
     public class Kitten : IEntity<int>
     {
@@ -8,5 +10,7 @@
         public string Color { get; set; }
         public bool HasCertificate { get; set; }
         public string Feed { get; set; }
+
+        public ICollection<Clinic> Clinics { get; init; }
     }
 }
