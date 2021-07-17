@@ -6,6 +6,7 @@ using DataBase.EF;
 using DataLayer.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Mapster;
+using MapsterMapper;
 using dbEntities = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Repository
@@ -13,19 +14,25 @@ namespace DataLayer.Repository
     public abstract class KittensContextRepository<TEntity, TDbEntity, TId> : IRepository<TEntity, TId> where TEntity : IEntity<TId> where TDbEntity : class, dbEntities::IEntity<TId>
     {
         protected readonly IDbContextFactory<KittensContext> ContextFactory;
+        protected readonly IMapper Mapper;
 
-        protected KittensContextRepository(IDbContextFactory<KittensContext> contextFactory) => ContextFactory = contextFactory;
+        protected KittensContextRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper)
+        {
+            ContextFactory = contextFactory;
+            Mapper = mapper;
+        }
 
         public async Task<IEnumerable<TEntity>> Get()
         {
             await using var context = ContextFactory.CreateDbContext();
-            return await context.Set<TDbEntity>().ProjectToType<TEntity>().ToListAsync();
+            return await context.Set<TDbEntity>().AsNoTracking().ProjectToType<TEntity>().ToListAsync();
         }
 
         public async Task Add(TEntity entity)
         {
             await using var context = ContextFactory.CreateDbContext();
-            await context.AddAsync(entity);
+            var entry = Mapper.Map<TDbEntity>(entity);
+            await context.AddAsync(entry);
             await context.SaveChangesAsync();
         }
 
@@ -41,7 +48,8 @@ namespace DataLayer.Repository
         public async Task Update(TEntity entity)
         {
             await using var context = ContextFactory.CreateDbContext();
-            context.Update(entity);
+            var entry = Mapper.Map<TDbEntity>(entity);
+            context.Update(entry);
             await context.SaveChangesAsync();
         }
     }

@@ -13,10 +13,8 @@ namespace DataLayer.Repository
 {
     public class ClinicsRepository : KittensContextRepository<Clinic, dbEntities::Clinic, int>, IClinicsRepository
     {
-        private readonly IMapper _mapper;
-        public ClinicsRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory)
+        public ClinicsRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory, mapper)
         {
-            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Kitten>> ListKittensInClinic(int clinicId)
@@ -25,14 +23,14 @@ namespace DataLayer.Repository
             var clinic = await context.Clinics.AsNoTracking().Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             return clinic is null 
                 ? Array.Empty<Kitten>() 
-                : _mapper.Map<IEnumerable<Kitten>>(clinic.Kittens);
+                : Mapper.Map<IEnumerable<Kitten>>(clinic.Kittens);
         }
 
         public async Task RegisterKittenInClinic(int clinicId, int kittenId)
         {
             await using var context = ContextFactory.CreateDbContext();
 
-            var clinic = await context.Clinics.SingleOrDefaultAsync(c => c.Id == clinicId);
+            var clinic = await context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             if (clinic is null) throw new ArgumentException("Clinic not exist");
 
             var kitten = await context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);
@@ -48,7 +46,7 @@ namespace DataLayer.Repository
         {
             await using var context = ContextFactory.CreateDbContext();
 
-            var clinic = await context.Clinics.SingleOrDefaultAsync(c => c.Id == clinicId);
+            var clinic = await context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             if (clinic is null) throw new ArgumentException("Clinic not exist");
 
             var kitten = await context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);

@@ -11,7 +11,7 @@ using DataLayer.Abstractions.Repositories;
 using DataLayer.Filters;
 
 using Mapster;
-
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 
 using dbEntities = DataBase.Abstractions.Entities;
@@ -20,7 +20,7 @@ namespace DataLayer.Repository
 {
     public class KittensRepository : KittensContextRepository<Kitten, dbEntities::Kitten, int>, IKittensRepository
     {
-        public KittensRepository(IDbContextFactory<KittensContext> contextFactory) : base(contextFactory) {}
+        public KittensRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory, mapper) {}
         
         public async Task<IEnumerable<Kitten>> GetFiltered(PageFilter pageFilter = default, KittenSearchFilterData searchFilter = null)
         {
