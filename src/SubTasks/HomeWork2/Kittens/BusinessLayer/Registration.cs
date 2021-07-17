@@ -11,6 +11,7 @@ namespace BusinessLayer
         public static IServiceCollection AddBusinessLayer(this IServiceCollection services)
         {
             services.AddTransient<IKittensService, KittensService>();
+            services.AddTransient<IClinicsService, ClinicsService>();
             TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicsMaps());
             return services;
         }
