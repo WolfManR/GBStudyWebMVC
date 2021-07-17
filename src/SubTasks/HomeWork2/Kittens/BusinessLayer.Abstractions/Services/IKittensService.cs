@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstractions.Services
         Task<IReadOnlyCollection<Kitten>> GetPage(int page, int pageSize);
         Task<IReadOnlyCollection<Kitten>> SearchFor(KittenSearchData searchData);
         Task<IReadOnlyCollection<Kitten>> GetPageFromSearch(int page, int pageSize, KittenSearchData searchData);
+        Task<IEnumerable<Clinic>> ListClinicsWhereKittenRegistered(int kittenId);
     }
 }

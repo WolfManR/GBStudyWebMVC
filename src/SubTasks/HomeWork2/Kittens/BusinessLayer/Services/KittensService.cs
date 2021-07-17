@@ -33,5 +33,11 @@ namespace BusinessLayer.Services
             var data = await Repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize }, Mapper.Map<KittenSearchFilterData>(searchData));
             return data.Select(Mapper.Map<Kitten>).ToList();
         }
+
+        public async Task<IEnumerable<Clinic>> ListClinicsWhereKittenRegistered(int kittenId)
+        {
+            var data = await Repository.ListClinicsWhereKittenRegistered(kittenId);
+            return Mapper.Map<IEnumerable<Clinic>>(data);
+        }
     }
 }

@@ -40,5 +40,14 @@ namespace DataLayer.Repository
             
             return await query.ProjectToType<Kitten>().ToListAsync();
         }
+
+        public async Task<IEnumerable<Clinic>> ListClinicsWhereKittenRegistered(int kittenId)
+        {
+            await using var context = ContextFactory.CreateDbContext();
+            var clinic = await context.Kittens.AsNoTracking().Include(c => c.Clinics).SingleOrDefaultAsync(c => c.Id == kittenId);
+            return clinic is null
+                ? Array.Empty<Clinic>()
+                : Mapper.Map<IEnumerable<Clinic>>(clinic.Clinics);
+        }
     }
 }

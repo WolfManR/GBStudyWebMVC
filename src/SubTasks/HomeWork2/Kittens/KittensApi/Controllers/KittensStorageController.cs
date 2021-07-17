@@ -70,5 +70,12 @@ namespace KittensApi.Controllers
             var data = await _kittensService.GetPageFromSearch(page, size, _mapper.Map<KittenSearchData>(searchRequest));
             return data.Select(_mapper.Map<KittenGetResponse>);
         }
+
+        [HttpPost("{kittenId:int}/clinics")]
+        public async Task<IEnumerable<ClinicGetResponse>> ListClinicsWhereKittenRegistered(int kittenId)
+        {
+            var data = await _kittensService.ListClinicsWhereKittenRegistered(kittenId);
+            return _mapper.Map<IEnumerable<ClinicGetResponse>>(data);
+        }
     }
 }
