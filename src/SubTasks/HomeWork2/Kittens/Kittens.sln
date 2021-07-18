@@ -19,13 +19,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer.Abstractions", "BusinessLayer.Abstractions\BusinessLayer.Abstractions.csproj", "{1EF6A533-E18A-4572-B67B-A848527500DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{28610157-0C88-4B08-802B-C6485B61FB34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{28610157-0C88-4B08-802B-C6485B61FB34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase.Abstractions", "DataBase.Abstractions\DataBase.Abstractions.csproj", "{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.Abstractions", "DataBase.Abstractions\DataBase.Abstractions.csproj", "{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{4EE60BA6-47DE-4E1B-A6F7-D8AEFB5B7576}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstractions", "{4708932E-A544-4FB0-99BD-7021A8BE2E04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthorizationStuff", "AuthorizationStuff", "{2F7382DC-BD8E-4730-AD15-81F43529AD9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataBase", "Authorization\Authorization.DataBase\Authorization.DataBase.csproj", "{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{44EFB044-5089-4551-884F-91BA786B7536}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstractions", "{EDEEA8B4-4EA6-4806-9B3A-63F706440673}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{72FF4967-4502-409E-ADCE-77511466A084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataBase.Abstractions", "Authorization\Authorization.DataBase.Abstractions\Authorization.DataBase.Abstractions.csproj", "{851AB4B2-3D73-47A9-AB94-037DBC7B4218}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +81,14 @@ Global
 		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +103,11 @@ Global
 		{27F8BF75-36BB-4197-98C6-88E5B6B37A9B} = {4708932E-A544-4FB0-99BD-7021A8BE2E04}
 		{4EE60BA6-47DE-4E1B-A6F7-D8AEFB5B7576} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
 		{4708932E-A544-4FB0-99BD-7021A8BE2E04} = {3DB8B635-5CCD-4088-8370-59BFC03F4BEA}
+		{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91} = {72FF4967-4502-409E-ADCE-77511466A084}
+		{44EFB044-5089-4551-884F-91BA786B7536} = {2F7382DC-BD8E-4730-AD15-81F43529AD9A}
+		{EDEEA8B4-4EA6-4806-9B3A-63F706440673} = {44EFB044-5089-4551-884F-91BA786B7536}
+		{72FF4967-4502-409E-ADCE-77511466A084} = {44EFB044-5089-4551-884F-91BA786B7536}
+		{851AB4B2-3D73-47A9-AB94-037DBC7B4218} = {EDEEA8B4-4EA6-4806-9B3A-63F706440673}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}
