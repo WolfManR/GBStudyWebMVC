@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implemen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataBase.Abstractions", "Authorization\Authorization.DataBase.Abstractions\Authorization.DataBase.Abstractions.csproj", "{851AB4B2-3D73-47A9-AB94-037DBC7B4218}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationApi", "Authorization\AuthorizationApi\AuthorizationApi.csproj", "{CE738DEC-2F91-40FD-9943-53E39BF6E299}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{851AB4B2-3D73-47A9-AB94-037DBC7B4218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE738DEC-2F91-40FD-9943-53E39BF6E299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE738DEC-2F91-40FD-9943-53E39BF6E299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE738DEC-2F91-40FD-9943-53E39BF6E299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE738DEC-2F91-40FD-9943-53E39BF6E299}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{EDEEA8B4-4EA6-4806-9B3A-63F706440673} = {44EFB044-5089-4551-884F-91BA786B7536}
 		{72FF4967-4502-409E-ADCE-77511466A084} = {44EFB044-5089-4551-884F-91BA786B7536}
 		{851AB4B2-3D73-47A9-AB94-037DBC7B4218} = {EDEEA8B4-4EA6-4806-9B3A-63F706440673}
+		{CE738DEC-2F91-40FD-9943-53E39BF6E299} = {2F7382DC-BD8E-4730-AD15-81F43529AD9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}
