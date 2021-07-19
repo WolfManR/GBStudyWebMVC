@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Authorization.BusinessLayer.Abstractions\Authorization.BusinessLayer.Abstractions.csproj" />
+    <ProjectReference Include="..\Authorization.BusinessLayer\Authorization.BusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

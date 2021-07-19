@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Authorization.BusinessLayer;
 using Authorization.BusinessLayer.Abstractions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -87,6 +88,8 @@ namespace AuthorizationApi
                     }
                 });
             });
+
+            services.AddSingleton<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
