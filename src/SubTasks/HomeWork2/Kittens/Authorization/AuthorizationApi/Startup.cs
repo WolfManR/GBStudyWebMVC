@@ -1,14 +1,21 @@
+using System;
+using System.Text;
+using Authorization.BusinessLayer.Abstractions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace AuthorizationApi
 {
     public class Startup
     {
+        private const string AuthPolicy = "AuthPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,6 +26,38 @@ namespace AuthorizationApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtSection = Configuration.GetSection(nameof(JwtSettings));
+            services.Configure<JwtSettings>(jwtSection);
+            var jwtSettings = jwtSection.Get<JwtSettings>();
+            var secureCode = Encoding.ASCII.GetBytes(jwtSettings.SecureCode);
+
+            services.AddCors(x => x.AddPolicy(AuthPolicy, b => b
+                .SetIsOriginAllowed(origin => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()));
+
+            services
+                .AddAuthentication(opt =>
+                {
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x => {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(secureCode),
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidAudience = jwtSettings.ValidAudience,
+                        ValidIssuer = jwtSettings.ValidIssuer,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -38,9 +77,10 @@ namespace AuthorizationApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            app.UseCors(AuthPolicy);
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
