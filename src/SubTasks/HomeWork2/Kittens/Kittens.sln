@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstraction
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthorizationStuff", "AuthorizationStuff", "{2F7382DC-BD8E-4730-AD15-81F43529AD9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataBase", "Authorization\Authorization.DataBase\Authorization.DataBase.csproj", "{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.DataBase", "Authorization\Authorization.DataBase\Authorization.DataBase.csproj", "{F29EA5F6-1EF0-4747-ACDC-31EA04A04C91}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stuff", "Stuff", "{44EFB044-5089-4551-884F-91BA786B7536}"
 EndProject
@@ -37,13 +37,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstraction
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{72FF4967-4502-409E-ADCE-77511466A084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataBase.Abstractions", "Authorization\Authorization.DataBase.Abstractions\Authorization.DataBase.Abstractions.csproj", "{851AB4B2-3D73-47A9-AB94-037DBC7B4218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.DataBase.Abstractions", "Authorization\Authorization.DataBase.Abstractions\Authorization.DataBase.Abstractions.csproj", "{851AB4B2-3D73-47A9-AB94-037DBC7B4218}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationApi", "Authorization\AuthorizationApi\AuthorizationApi.csproj", "{CE738DEC-2F91-40FD-9943-53E39BF6E299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorizationApi", "Authorization\AuthorizationApi\AuthorizationApi.csproj", "{CE738DEC-2F91-40FD-9943-53E39BF6E299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.BusinessLayer.Abstractions", "Authorization\Authorization.BusinessLayer.Abstractions\Authorization.BusinessLayer.Abstractions.csproj", "{AF78910A-6DF4-40DE-9406-A4CCDB5D2226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.BusinessLayer.Abstractions", "Authorization\Authorization.BusinessLayer.Abstractions\Authorization.BusinessLayer.Abstractions.csproj", "{AF78910A-6DF4-40DE-9406-A4CCDB5D2226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.BusinessLayer", "Authorization\Authorization.BusinessLayer\Authorization.BusinessLayer.csproj", "{4ACA6BE5-DA85-4477-9323-95BE1D694F4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.BusinessLayer", "Authorization\Authorization.BusinessLayer\Authorization.BusinessLayer.csproj", "{4ACA6BE5-DA85-4477-9323-95BE1D694F4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataLayer.Abstractions", "Authorization\Authorization.DataLayer.Abstractions\Authorization.DataLayer.Abstractions.csproj", "{12B77065-0FC1-4CE6-92F0-12BBFE8216E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataLayer", "Authorization\Authorization.DataLayer\Authorization.DataLayer.csproj", "{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +111,14 @@ Global
 		{4ACA6BE5-DA85-4477-9323-95BE1D694F4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ACA6BE5-DA85-4477-9323-95BE1D694F4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ACA6BE5-DA85-4477-9323-95BE1D694F4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +141,8 @@ Global
 		{CE738DEC-2F91-40FD-9943-53E39BF6E299} = {2F7382DC-BD8E-4730-AD15-81F43529AD9A}
 		{AF78910A-6DF4-40DE-9406-A4CCDB5D2226} = {EDEEA8B4-4EA6-4806-9B3A-63F706440673}
 		{4ACA6BE5-DA85-4477-9323-95BE1D694F4C} = {72FF4967-4502-409E-ADCE-77511466A084}
+		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2} = {EDEEA8B4-4EA6-4806-9B3A-63F706440673}
+		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A} = {72FF4967-4502-409E-ADCE-77511466A084}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}
