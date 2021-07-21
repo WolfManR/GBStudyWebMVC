@@ -8,12 +8,14 @@
   <ItemGroup>
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authorization.BusinessLayer.Abstractions\Authorization.BusinessLayer.Abstractions.csproj" />
     <ProjectReference Include="..\Authorization.BusinessLayer\Authorization.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Authorization.DataBase\Authorization.DataBase.csproj" />
     <ProjectReference Include="..\Authorization.DataLayer\Authorization.DataLayer.csproj" />
   </ItemGroup>
 
