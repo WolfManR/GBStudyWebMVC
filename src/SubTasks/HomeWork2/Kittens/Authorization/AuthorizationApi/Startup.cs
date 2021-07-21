@@ -2,6 +2,8 @@ using System;
 using System.Text;
 using Authorization.BusinessLayer;
 using Authorization.BusinessLayer.Abstractions;
+using Authorization.DataLayer;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -89,7 +91,10 @@ namespace AuthorizationApi
                 });
             });
 
-            services.AddSingleton<IUserService, UserService>();
+            services
+                .AddDataLayer()
+                .AddBusinessLayer();
+            services.AddScoped<IMapper, Mapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

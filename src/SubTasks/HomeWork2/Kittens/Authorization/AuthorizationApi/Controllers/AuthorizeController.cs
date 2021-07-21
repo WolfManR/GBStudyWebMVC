@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using System;
+using System.Threading.Tasks;
+using AuthorizationApi.Controllers.Responses;
+using MapsterMapper;
 
 namespace AuthorizationApi.Controllers
 {
@@ -13,31 +16,41 @@ namespace AuthorizationApi.Controllers
     public class AuthorizeController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public AuthorizeController(IUserService userService)
+        public AuthorizeController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromQuery] string user, string password)
+        public async Task<IActionResult> Authenticate([FromQuery] string user, string password)
         {
-            TokenData token = _userService.Authenticate(user, password);
+            TokenData token = await _userService.Authenticate(user, password);
             if (token is null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
             SetTokenCookie(token.RefreshToken);
-            return Ok(token);
+            return Ok(_mapper.Map<AuthenticateResponse>(token));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Register([FromQuery] string user, string password)
+        {
+            var succeed = await _userService.Register(user, password);
+            return succeed ? Ok() : BadRequest();
         }
 
         [Authorize]
         [HttpPost("refresh-token")]
-        public IActionResult Refresh()
+        public async Task<IActionResult> Refresh()
         {
             string oldRefreshToken = Request.Cookies["refreshToken"];
-            string newRefreshToken = _userService.RefreshToken(oldRefreshToken);
+            string newRefreshToken = await _userService.UpdateRefreshToken(oldRefreshToken);
 
             if (string.IsNullOrWhiteSpace(newRefreshToken))
             {

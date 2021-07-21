@@ -6,13 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authorization.BusinessLayer.Abstractions\Authorization.BusinessLayer.Abstractions.csproj" />
     <ProjectReference Include="..\Authorization.BusinessLayer\Authorization.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Authorization.DataLayer\Authorization.DataLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Requests\" />
   </ItemGroup>
 
 </Project>
