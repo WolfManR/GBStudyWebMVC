@@ -3,67 +3,83 @@ using System.Security.Claims;
 using System.Text;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 using Authorization.BusinessLayer.Abstractions;
+using Authorization.DataLayer.Abstractions;
+using MapsterMapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RefreshToken = Authorization.BusinessLayer.Abstractions.RefreshToken;
+using DataRefreshToken = Authorization.DataLayer.Abstractions.RefreshToken;
 
 namespace Authorization.BusinessLayer
 {
     public class UserService : IUserService
     {
+        private readonly IUsersRepository _repository;
+        private readonly IMapper _mapper;
         private readonly JwtSettings _jwtSettings;
-
-        private readonly IDictionary<string, AuthInfo> _users = new Dictionary<string, AuthInfo>()
+        
+        public UserService(IOptions<JwtSettings> jwtSettings, IUsersRepository repository, IMapper mapper)
         {
-            {"test", new AuthInfo("test")}
-        };
-
-        public UserService(IOptions<JwtSettings> jwtSettings)
-        {
+            _repository = repository;
+            _mapper = mapper;
             _jwtSettings = jwtSettings.Value;
         }
 
-        public TokenData Authenticate(string user, string password)
+        public async Task<TokenData> Authenticate(string login, string password)
         {
-            if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
                 return null;
             }
-            int i = 0;
-            foreach (KeyValuePair<string, AuthInfo> pair in _users)
+
+            var authInfo = await _repository.FindUserAsync(login, password);
+            if (authInfo is null) return null;
+                
+            RefreshToken refreshToken = GenerateRefreshToken(authInfo.Id);
+            await _repository.UpdateUserRefreshTokenAsync(authInfo.Id, _mapper.Map<DataRefreshToken>(refreshToken));
+            return new TokenData()
             {
-                i++;
-                if (string.CompareOrdinal(pair.Key, user) == 0 && string.CompareOrdinal(pair.Value.Password, password) == 0)
-                {
-                    RefreshToken refreshToken = GenerateRefreshToken(i);
-                    pair.Value.LatestRefreshToken = refreshToken;
-                    return new TokenData()
-                    {
-                        Token = GenerateJwtToken(i, 15),
-                        RefreshToken = refreshToken.Token
-                    };
-                }
-            }
-            return null;
+                Token = GenerateJwtToken(authInfo.Id, 15),
+                RefreshToken = refreshToken.Token
+            };
         }
 
-        public string RefreshToken(string token)
+        public async Task<bool> Register(string login, string password)
         {
-            int i = 0;
-            foreach (KeyValuePair<string, AuthInfo> pair in _users)
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
-                i++;
-                if (string.CompareOrdinal(pair.Value.LatestRefreshToken.Token, token) == 0
-                    && pair.Value.LatestRefreshToken.IsExpired is false)
+                return false;
+            }
+
+            return await _repository.AddUserAsync(login, password);
+        }
+
+        public async Task<string> UpdateRefreshToken(string token)
+        {
+            JwtSecurityTokenHandler tokenHandler = new();
+            if (tokenHandler.CanReadToken(token))
+            {
+                var security = tokenHandler.ReadJwtToken(token);
+                var idClaim = security.Claims.SingleOrDefault(c => c.ValueType == ClaimTypes.NameIdentifier);
+                if (idClaim is null) return string.Empty;
+                var userId = idClaim.Value;
+                var dataRefreshToken = await _repository.GetUserRefreshTokenAsync(userId);
+                var refreshToken = _mapper.Map<RefreshToken>(dataRefreshToken);
+                if (string.CompareOrdinal(refreshToken.Token, token) == 0 && !refreshToken.IsExpired)
                 {
-                    pair.Value.LatestRefreshToken = GenerateRefreshToken(i);
-                    return pair.Value.LatestRefreshToken.Token;
+                    refreshToken = GenerateRefreshToken(userId);
+                    await _repository.UpdateUserRefreshTokenAsync(userId, _mapper.Map<DataRefreshToken>(refreshToken));
+                    return refreshToken.Token;
                 }
             }
+            
             return string.Empty;
         }
 
-        private string GenerateJwtToken(int id, int minutes)
+        private string GenerateJwtToken(string id, int minutes)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(_jwtSettings.SecureCode);
@@ -72,7 +88,7 @@ namespace Authorization.BusinessLayer
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(ClaimTypes.Name, id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, id)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(minutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -81,7 +97,7 @@ namespace Authorization.BusinessLayer
             return tokenHandler.WriteToken(token);
         }
 
-        public RefreshToken GenerateRefreshToken(int id)
+        public RefreshToken GenerateRefreshToken(string id)
         {
             RefreshToken refreshToken = new RefreshToken
             {
@@ -90,9 +106,6 @@ namespace Authorization.BusinessLayer
             return refreshToken;
         }
 
-        private record AuthInfo(string Password)
-        {
-            public RefreshToken LatestRefreshToken { get; set; }
-        };
+        
     }
 }
