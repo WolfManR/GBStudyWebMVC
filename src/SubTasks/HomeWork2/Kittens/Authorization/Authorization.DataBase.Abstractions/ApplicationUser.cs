@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+using System;
+
 namespace Authorization.DataBase.Abstractions
 {
     public class ApplicationUser : IdentityUser
     {
-        public RefreshToken LatestRefreshToken { get; set; }
+        public string Token { get; set; }
+        public DateTime TokenExpires { get; set; }
     }
 }
