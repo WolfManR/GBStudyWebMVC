@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Authorization.MigrationsLauncher
 {
@@ -18,11 +19,18 @@ namespace Authorization.MigrationsLauncher
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host
             .CreateDefaultBuilder(args)
-#if DEBUG
-            .UseEnvironment("Development")
-#endif
+            .ConfigureAppConfiguration(b => b.AddUserSecrets<Program>())
             .ConfigureServices((host, services) => services
-                .AddDbContext<AuthorizationContext>(options => options.UseNpgsql(host.Configuration.GetConnectionString("Default"))));
+                .AddDbContext<AuthorizationContext>(options => options.UseNpgsql(host.Configuration.GetConnectionString("Default"),
+                        builder => builder.MigrationsAssembly("Authorization.MigrationsLauncher"))
+                    .UseLoggerFactory(LoggerFactory.Create(builder =>
+                    {
+                        builder
+                            .AddConsole()
+                            .AddFilter((category, logLevel) =>
+                                category == DbLoggerCategory.Database.Command.Name &&
+                                logLevel == LogLevel.Information);
+                    }))));
 
         static async ValueTask Work(IServiceProvider services)
         {
