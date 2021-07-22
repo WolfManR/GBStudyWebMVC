@@ -6,7 +6,6 @@ using Authorization.DataBase.Abstractions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using RefreshToken = Authorization.DataLayer.Abstractions.RefreshToken;
-using DataRefreshToken = Authorization.DataBase.Abstractions.RefreshToken;
 
 namespace Authorization.DataLayer
 {
@@ -33,7 +32,11 @@ namespace Authorization.DataLayer
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded) return false;
 
-            var roleResult = await _userManager.AddClaimsAsync(user,new []{new Claim("Id", user.Id), new Claim("Role", "User")});
+            var roleResult = await _userManager.AddClaimsAsync(user, new []
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Role, "User")
+            });
             if (!roleResult.Succeeded) return false;
 
             return true;
@@ -47,20 +50,21 @@ namespace Authorization.DataLayer
             var user = await _userManager.FindByEmailAsync(login);
             if (user is null) return null;
             var claims = await _userManager.GetClaimsAsync(user);
-            return new AuthInfo(user.Id, claims.ToImmutableList(), _mapper.Map<RefreshToken>(user.LatestRefreshToken));
+            return new AuthInfo(user.Id, claims.ToImmutableList(), _mapper.Map<RefreshToken>(user));
         }
 
         public async Task<RefreshToken> GetUserRefreshTokenAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            return _mapper.Map<RefreshToken>(user.LatestRefreshToken);
+            return _mapper.Map<RefreshToken>(user);
         }
 
         public async Task UpdateUserRefreshTokenAsync(string userId, RefreshToken refreshToken)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user is null) return;
-            user.LatestRefreshToken = _mapper.Map<DataRefreshToken>(refreshToken);
+            user.Token = refreshToken.Token;
+            user.TokenExpires = refreshToken.Expires;
             await _userManager.UpdateAsync(user);
         }
     }
