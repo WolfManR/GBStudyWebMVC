@@ -1,4 +1,5 @@
-﻿using Authorization.DataLayer.Abstractions;
+﻿using System.Collections.Generic;
+using Authorization.DataLayer.Abstractions;
 using System.Collections.Immutable;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Authorization.DataLayer
             _mapper = mapper;
         }
 
-        public async Task<bool> AddUserAsync(string login, string password)
+        public async Task<bool> AddUserAsync(string login, string password, IEnumerable<Claim> claims)
         {
             var user = new ApplicationUser()
             {
@@ -32,14 +33,15 @@ namespace Authorization.DataLayer
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded) return false;
 
-            var roleResult = await _userManager.AddClaimsAsync(user, new []
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Role, "User")
-            });
-            if (!roleResult.Succeeded) return false;
+            var assignResult = await AssignClaims(user, claims);
 
-            return true;
+            return assignResult;
+        }
+
+        private async Task<bool> AssignClaims(ApplicationUser user, IEnumerable<Claim> claims)
+        {
+            var result = await _userManager.AddClaimsAsync(user, claims);
+            return result.Succeeded;
         }
 
         public async Task<AuthInfo> FindUserAsync(string login, string password)
@@ -53,10 +55,12 @@ namespace Authorization.DataLayer
             return new AuthInfo(user.Id, claims.ToImmutableList(), _mapper.Map<RefreshToken>(user));
         }
 
-        public async Task<RefreshToken> GetUserRefreshTokenAsync(string id)
+        public async Task<AuthInfo> FindUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            return _mapper.Map<RefreshToken>(user);
+            if (user is null) return null;
+            var claims = await _userManager.GetClaimsAsync(user);
+            return new AuthInfo(user.Id, claims.ToImmutableList(), _mapper.Map<RefreshToken>(user));
         }
 
         public async Task UpdateUserRefreshTokenAsync(string userId, RefreshToken refreshToken)
