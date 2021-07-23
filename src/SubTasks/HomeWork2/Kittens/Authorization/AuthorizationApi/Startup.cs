@@ -36,7 +36,13 @@ namespace AuthorizationApi
             services.AddDbContext<AuthorizationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
 
             services
-                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<AuthorizationContext>()
                 .AddDefaultTokenProviders();
 
@@ -67,8 +73,6 @@ namespace AuthorizationApi
                         IssuerSigningKey = new SymmetricSecurityKey(secureCode),
                         ValidateAudience = true,
                         ValidateIssuer = true,
-                        ValidAudience = jwtSettings.ValidAudience,
-                        ValidIssuer = jwtSettings.ValidIssuer,
                         ClockSkew = TimeSpan.Zero
                     };
                 });
