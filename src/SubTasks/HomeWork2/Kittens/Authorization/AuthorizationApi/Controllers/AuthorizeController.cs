@@ -38,10 +38,10 @@ namespace AuthorizationApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Register([FromQuery] string user, string password)
+        [HttpPost("registeruser")]
+        public async Task<IActionResult> RegisterUser([FromQuery] string user, string password)
         {
-            var succeed = await _userService.Register(user, password);
+            var succeed = await _userService.RegisterUser(user, password);
             return succeed ? Ok() : BadRequest();
         }
 
