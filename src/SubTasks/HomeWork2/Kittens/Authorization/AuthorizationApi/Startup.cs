@@ -73,6 +73,8 @@ namespace AuthorizationApi
                         IssuerSigningKey = new SymmetricSecurityKey(secureCode),
                         ValidateAudience = true,
                         ValidateIssuer = true,
+                        ValidAudience = jwtSettings.ValidAudience,
+                        ValidIssuer = jwtSettings.ValidIssuer,
                         ClockSkew = TimeSpan.Zero
                     };
                 });

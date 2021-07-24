@@ -38,11 +38,11 @@ namespace Authorization.BusinessLayer
             var authInfo = await _repository.FindUserAsync(login, password);
             if (authInfo is null) return null;
                 
-            RefreshToken refreshToken = GenerateRefreshToken(PrepareUserClaims(authInfo));
+            RefreshToken refreshToken = GenerateRefreshToken(PrepareUserClaims(authInfo, _jwtSettings.ValidIssuer, _jwtSettings.ValidAudience));
             await _repository.UpdateUserRefreshTokenAsync(authInfo.Id, _mapper.Map<DataRefreshToken>(refreshToken));
             return new TokenData()
             {
-                Token = GenerateJwtToken(PrepareUserClaims(authInfo), 15),
+                Token = GenerateJwtToken(PrepareUserClaims(authInfo, _jwtSettings.ValidIssuer, _jwtSettings.ValidAudience), 15),
                 RefreshToken = refreshToken.Token
             };
         }
@@ -67,7 +67,7 @@ namespace Authorization.BusinessLayer
             if (tokenHandler.CanReadToken(token))
             {
                 var security = tokenHandler.ReadJwtToken(token);
-                var idClaim = security.Claims.SingleOrDefault(c => c.ValueType == ClaimTypes.NameIdentifier);
+                var idClaim = security.Claims.SingleOrDefault(c => c.Type == JwtRegisteredClaimNames.NameId);
                 if (idClaim is null) return string.Empty;
                 var userId = idClaim.Value;
                 var authInfo = await _repository.FindUserByIdAsync(userId);
@@ -75,7 +75,7 @@ namespace Authorization.BusinessLayer
                 var refreshToken = _mapper.Map<RefreshToken>(authInfo.LatestRefreshToken);
                 if (string.CompareOrdinal(refreshToken.Token, token) == 0 && !refreshToken.IsExpired)
                 {
-                    refreshToken = GenerateRefreshToken(PrepareUserClaims(authInfo));
+                    refreshToken = GenerateRefreshToken(PrepareUserClaims(authInfo, _jwtSettings.ValidIssuer, _jwtSettings.ValidAudience));
                     await _repository.UpdateUserRefreshTokenAsync(userId, _mapper.Map<DataRefreshToken>(refreshToken));
                     return refreshToken.Token;
                 }
@@ -84,11 +84,13 @@ namespace Authorization.BusinessLayer
             return string.Empty;
         }
 
-        private IEnumerable<Claim> PrepareUserClaims(AuthInfo authInfo)
+        private IEnumerable<Claim> PrepareUserClaims(AuthInfo authInfo, string issuer, string audience)
         {
             List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.NameIdentifier, authInfo.Id)
+                new Claim(JwtRegisteredClaimNames.NameId, authInfo.Id),
+                new Claim(JwtRegisteredClaimNames.Iss, issuer),
+                new Claim(JwtRegisteredClaimNames.Aud, audience)
             };
             var roles = authInfo.Claims.Where(c => c.Type == ClaimTypes.Role);
             foreach (var role in roles)
