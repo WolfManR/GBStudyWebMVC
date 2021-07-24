@@ -9,10 +9,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
 using BusinessLayer.Abstractions.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KittensApi.Controllers
 {
     [Route("kittens")]
+    [Authorize(Policy = "UserOnly")]
     [ApiController]
     public class KittensStorageController : ControllerBase
     {

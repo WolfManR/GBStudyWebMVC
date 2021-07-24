@@ -1,4 +1,6 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using BusinessLayer;
 using DataBase.EF;
 using DataLayer;
@@ -66,6 +68,9 @@ namespace KittensApi
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddAuthorization(options =>
+                options.AddPolicy("UserOnly", policy => policy.RequireClaim(ClaimTypes.Role, "User")));
 
             TypeAdapterConfig.GlobalSettings.Scan(typeof(Startup).Assembly);
             services.AddScoped<IMapper, Mapper>();

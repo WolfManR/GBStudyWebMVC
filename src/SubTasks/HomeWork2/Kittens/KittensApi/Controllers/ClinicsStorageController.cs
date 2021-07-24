@@ -6,10 +6,12 @@ using BusinessLayer.Abstractions.Services;
 using MapsterMapper;
 using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KittensApi.Controllers
 {
     [Route("clinics")]
+    [Authorize(Policy = "UserOnly")]
     [ApiController]
     public class ClinicsStorageController : ControllerBase
     {
