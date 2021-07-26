@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
 using BusinessLayer.Abstractions.Services;
+using KittensApi.Validations.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace KittensApi.Controllers
@@ -20,23 +21,42 @@ namespace KittensApi.Controllers
     {
         private readonly IKittensService _kittensService;
         private readonly IMapper _mapper;
+        private readonly IValidationService<KittenCreateRequest> _createRequestValidator;
+        private readonly IValidationService<KittenUpdateRequest> _updateRequestValidator;
 
-        public KittensStorageController(IKittensService kittensService, IMapper mapper)
+        public KittensStorageController(IKittensService kittensService,
+                                        IMapper mapper,
+                                        IValidationService<KittenCreateRequest> createRequestValidator,
+                                        IValidationService<KittenUpdateRequest> updateRequestValidator)
         {
             _kittensService = kittensService;
-            this._mapper = mapper;
+            _mapper = mapper;
+            _createRequestValidator = createRequestValidator;
+            _updateRequestValidator = updateRequestValidator;
         }
 
         [HttpPost]
-        public async Task CreateAsync(KittenCreateRequest request)
+        public async Task<KittenCreateResponse> CreateAsync(KittenCreateRequest request)
         {
+            var failures = _createRequestValidator.ValidateEntry(request);
+            if (failures.Count > 0)
+            {
+                return new(failures, false);
+            }
             await _kittensService.Add(_mapper.Map<Kitten>(request));
+            return new(failures, true);
         }
 
         [HttpPut]
-        public async Task UpdateAsync([FromBody] KittenUpdateRequest request)
+        public async Task<KittenUpdateResponse> UpdateAsync([FromBody] KittenUpdateRequest request)
         {
+            var failures = _updateRequestValidator.ValidateEntry(request);
+            if (failures.Count > 0)
+            {
+                return new(failures, false);
+            }
             await _kittensService.Update(_mapper.Map<Kitten>(request));
+            return new(failures, true);
         }
 
         [HttpDelete("{id:int}")]

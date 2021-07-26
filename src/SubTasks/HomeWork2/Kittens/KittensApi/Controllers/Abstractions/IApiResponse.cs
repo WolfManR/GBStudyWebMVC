@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using KittensApi.Validations.Abstractions;
 
-namespace KittensApi.Validations.Abstractions
+namespace KittensApi.Controllers.Abstractions
 {
-    public interface IOperationResult<TResult>
+    public interface IApiResponse
     {
-        TResult Result { get; }
         IReadOnlyList<IOperationFailure> Failures { get; }
         bool Succeed { get; }
     }
