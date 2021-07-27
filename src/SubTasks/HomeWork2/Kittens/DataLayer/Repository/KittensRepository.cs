@@ -20,13 +20,12 @@ namespace DataLayer.Repository
 {
     public class KittensRepository : KittensContextRepository<Kitten, dbEntities::Kitten, int>, IKittensRepository
     {
-        public KittensRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory, mapper) {}
+        public KittensRepository(KittensContext context, IMapper mapper) : base(context, mapper) {}
         
         public async Task<IEnumerable<Kitten>> GetFiltered(PageFilter pageFilter = default, KittenSearchFilterData searchFilter = null)
         {
-            await using var context = ContextFactory.CreateDbContext();
-            if (!await context.Kittens.AnyAsync()) return Array.Empty<Kitten>();
-            var query = context.Kittens.AsQueryable();
+            if (!await Context.Kittens.AnyAsync()) return Array.Empty<Kitten>();
+            var query = Context.Kittens.AsQueryable();
 
             if (pageFilter != PageFilter.Empty())
             {
@@ -43,8 +42,7 @@ namespace DataLayer.Repository
 
         public async Task<IEnumerable<Clinic>> ListClinicsWhereKittenRegistered(int kittenId)
         {
-            await using var context = ContextFactory.CreateDbContext();
-            var clinic = await context.Kittens.AsNoTracking().Include(c => c.Clinics).SingleOrDefaultAsync(c => c.Id == kittenId);
+            var clinic = await Context.Kittens.AsNoTracking().Include(c => c.Clinics).SingleOrDefaultAsync(c => c.Id == kittenId);
             return clinic is null
                 ? Array.Empty<Clinic>()
                 : Mapper.Map<IEnumerable<Clinic>>(clinic.Clinics);

@@ -13,14 +13,13 @@ namespace DataLayer.Repository
 {
     public class ClinicsRepository : KittensContextRepository<Clinic, dbEntities::Clinic, int>, IClinicsRepository
     {
-        public ClinicsRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper) : base(contextFactory, mapper)
+        public ClinicsRepository(KittensContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
         public async Task<IEnumerable<Kitten>> ListKittensInClinic(int clinicId)
         {
-            await using var context = ContextFactory.CreateDbContext();
-            var clinic = await context.Clinics.AsNoTracking().Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
+            var clinic = await Context.Clinics.AsNoTracking().Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             return clinic is null 
                 ? Array.Empty<Kitten>() 
                 : Mapper.Map<IEnumerable<Kitten>>(clinic.Kittens);
@@ -28,34 +27,30 @@ namespace DataLayer.Repository
 
         public async Task RegisterKittenInClinic(int clinicId, int kittenId)
         {
-            await using var context = ContextFactory.CreateDbContext();
-
-            var clinic = await context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
+            var clinic = await Context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             if (clinic is null) throw new ArgumentException("Clinic not exist");
 
-            var kitten = await context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);
+            var kitten = await Context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);
             if (kitten is null) throw new ArgumentException("Kitten not exist");
 
             if (clinic.Kittens.Contains(kitten)) return;
             clinic.Kittens.Add(kitten);
 
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
 
         public async Task UnRegisterKittenFromClinic(int clinicId, int kittenId)
         {
-            await using var context = ContextFactory.CreateDbContext();
-
-            var clinic = await context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
+            var clinic = await Context.Clinics.Include(c => c.Kittens).SingleOrDefaultAsync(c => c.Id == clinicId);
             if (clinic is null) throw new ArgumentException("Clinic not exist");
 
-            var kitten = await context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);
+            var kitten = await Context.Kittens.SingleOrDefaultAsync(c => c.Id == kittenId);
             if (kitten is null) throw new ArgumentException("Kitten not exist");
 
             if (!clinic.Kittens.Contains(kitten)) return;
             clinic.Kittens.Remove(kitten);
 
-            await context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
     }
 }

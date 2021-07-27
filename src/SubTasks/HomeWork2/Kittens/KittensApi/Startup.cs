@@ -35,7 +35,7 @@ namespace KittensApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services
                 .AddDataLayer()
                 .AddBusinessLayer();
