@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
 using BusinessLayer.Abstractions.Services;
+using BusinessLayer.Abstractions.Validations;
 using DataLayer.Abstractions.Filters;
 using DataLayer.Abstractions.Repositories;
 using KittenData = DataLayer.Abstractions.Entities.Kitten;
@@ -12,7 +13,10 @@ namespace BusinessLayer.Services
 {
     public class KittensService : Service<Kitten, KittenData, int, IKittensRepository>, IKittensService
     {
-        public KittensService(IKittensRepository repository, IMapper mapper) : base(repository, mapper)
+        public KittensService(IKittensRepository repository,
+                              IMapper mapper,
+                              IValidationService<Kitten> entityValidation) 
+            : base(repository, mapper, entityValidation)
         {
         }
 

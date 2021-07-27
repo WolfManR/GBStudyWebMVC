@@ -2,6 +2,7 @@
 using BusinessLayer.Abstractions.Services;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
+using BusinessLayer.Abstractions.Validations;
 using DataLayer.Abstractions.Repositories;
 using MapsterMapper;
 using dataEntities = DataLayer.Abstractions.Entities;
@@ -9,17 +10,19 @@ using dataEntities = DataLayer.Abstractions.Entities;
 namespace BusinessLayer.Services
 {
     public class Service<TEntity, TDataEntity, TId, TRepository> : IService<TEntity, TId> 
-        where TEntity : IEntity<TId> 
+        where TEntity : class, IEntity<TId> 
         where TDataEntity : dataEntities::IEntity<TId> 
         where TRepository : IRepository<TDataEntity, TId>
     {
         protected readonly TRepository Repository;
         protected readonly IMapper Mapper;
+        private readonly IValidationService<TEntity> _entityValidation;
 
-        public Service(TRepository repository, IMapper mapper)
+        public Service(TRepository repository, IMapper mapper, IValidationService<TEntity> entityValidation)
         {
             Repository = repository;
             Mapper = mapper;
+            _entityValidation = entityValidation;
         }
 
         public async Task<IReadOnlyCollection<TEntity>> Get()
@@ -28,14 +31,26 @@ namespace BusinessLayer.Services
             return Mapper.Map<List<TEntity>>(data);
         }
 
-        public Task Add(TEntity entity)
+        public async Task<IOperationResult> Add(TEntity entity)
         {
-            return Repository.Add(Mapper.Map<TDataEntity>(entity));
+            var failures = _entityValidation.ValidateEntry(entity);
+            if (failures.Count > 0)
+            {
+                return new OperationResult(failures, false);
+            }
+            await Repository.Add(Mapper.Map<TDataEntity>(entity));
+            return new OperationResult(failures, true);
         }
 
-        public Task Update(TEntity entity)
+        public async Task<IOperationResult> Update(TEntity entity)
         {
-            return Repository.Update(Mapper.Map<TDataEntity>(entity));
+            var failures = _entityValidation.ValidateEntry(entity);
+            if (failures.Count > 0)
+            {
+                return new OperationResult(failures, false);
+            }
+            await Repository.Update(Mapper.Map<TDataEntity>(entity));
+            return new OperationResult(failures, true);
         }
 
         public Task Delete(TId id)

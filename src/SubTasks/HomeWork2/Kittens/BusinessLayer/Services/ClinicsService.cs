@@ -4,14 +4,17 @@ using DataLayer.Abstractions.Repositories;
 using MapsterMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using BusinessLayer.Abstractions.Validations;
 using dataEntities = DataLayer.Abstractions.Entities;
 
 namespace BusinessLayer.Services
 {
     public class ClinicsService : Service<Clinic, dataEntities::Clinic ,int, IClinicsRepository>, IClinicsService
     {
-        public ClinicsService(IClinicsRepository repository, IMapper mapper) : base(repository, mapper)
+        public ClinicsService(IClinicsRepository repository,
+                              IMapper mapper,
+                              IValidationService<Clinic> entityValidation) 
+            : base(repository, mapper, entityValidation)
         {
         }
 
