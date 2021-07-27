@@ -43,8 +43,8 @@ namespace KittensApi.Controllers
             {
                 return new(failures, false);
             }
-            await _kittensService.Add(_mapper.Map<Kitten>(request));
-            return new(failures, true);
+            var result = await _kittensService.Add(_mapper.Map<Kitten>(request));
+            return new(_mapper.Map<IReadOnlyList<IOperationFailure>>(result.Failures), result.Succeed);
         }
 
         [HttpPut]
@@ -55,8 +55,8 @@ namespace KittensApi.Controllers
             {
                 return new(failures, false);
             }
-            await _kittensService.Update(_mapper.Map<Kitten>(request));
-            return new(failures, true);
+            var result = await _kittensService.Update(_mapper.Map<Kitten>(request));
+            return new(_mapper.Map<IReadOnlyList<IOperationFailure>>(result.Failures), result.Succeed);
         }
 
         [HttpDelete("{id:int}")]
