@@ -49,7 +49,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.DataLayer.Abs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.DataLayer", "Authorization\Authorization.DataLayer\Authorization.DataLayer.csproj", "{8603BF3B-5ABD-42E7-BD6D-85D797C2037A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.MigrationsLauncher", "Authorization\Authorization.MigrationsLauncher\Authorization.MigrationsLauncher.csproj", "{0170159E-8922-4236-9BBE-327FFCBF7E7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.MigrationsLauncher", "Authorization\Authorization.MigrationsLauncher\Authorization.MigrationsLauncher.csproj", "{0170159E-8922-4236-9BBE-327FFCBF7E7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FC1C3A1-0135-419E-B192-4CFCF6C2DCE1}"
+	ProjectSection(SolutionItems) = preProject
+		ValidationsCodes.txt = ValidationsCodes.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

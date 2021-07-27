@@ -18,8 +18,12 @@ using Microsoft.OpenApi.Models;
 
 using System.Text;
 using BusinessLayer.Abstractions.Models;
+using BusinessLayer.Abstractions.Validations;
+using KittensApi.Controllers.Requests;
+using KittensApi.Validations.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using KittensApi.Validations.Abstractions;
 
 namespace KittensApi
 {
@@ -103,6 +107,11 @@ namespace KittensApi
                     }
                 });
             });
+
+            services.AddSingleton<Validations.Abstractions.IValidationService<ClinicCreateRequest>, ClinicCreateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<ClinicUpdateRequest>, ClinicUpdateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<KittenCreateRequest>, KittenCreateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<KittenUpdateRequest>, KittenUpdateRequestValidator>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
