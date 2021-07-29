@@ -8,6 +8,6 @@ namespace DataBase.Abstractions.Entities
 
         public string Name { get; set; }
 
-        public ICollection<Kitten> Kittens { get; init; }
+        public ICollection<Patient> Patients { get; init; }
     }
 }
