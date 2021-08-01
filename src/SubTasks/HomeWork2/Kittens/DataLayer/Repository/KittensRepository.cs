@@ -18,7 +18,7 @@ using dbEntities = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Repository
 {
-    public class KittensRepository : KittensContextRepository<Kitten, dbEntities::Kitten, int>, IKittensRepository
+    public class KittensRepository : KittensContextRepository<Kitten, dbEntities::Kitten, int>, IKittensRepository, IKittenCardsRepository
     {
         public KittensRepository(KittensContext context, IMapper mapper) : base(context, mapper) {}
         
@@ -46,6 +46,44 @@ namespace DataLayer.Repository
             return clinic is null
                 ? Array.Empty<Clinic>()
                 : Mapper.Map<IEnumerable<Clinic>>(clinic.Clinics);
+        }
+
+        public async Task<KittenCard> Get(int kittenId, int clinicId)
+        {
+            var kitten = await Context.Kittens
+                .Include(k => k.Analysis).ThenInclude(a => a.Clinic)
+                .Include(k => k.Clinics)
+                .SingleOrDefaultAsync(k => k.Id == kittenId);
+
+            if (kitten?.Clinics.SingleOrDefault(c => c.Id != clinicId) is not { } clinic) return null;
+
+            var analizes = kitten.Analysis.Where(a => a.Clinic.Id == clinicId);
+            var card = new KittenCard()
+            {
+                Kitten = Mapper.Map<Kitten>(kitten),
+                Clinic = Mapper.Map<Clinic>(clinic),
+                Analyzes = Mapper.Map<IReadOnlyCollection<IAnalysis>>(analizes)
+            };
+
+            return card;
+        }
+
+        public async Task<FullKittenCard> Get(int kittenId)
+        {
+            var kitten = await Context.Kittens
+                .Include(k => k.Analysis).ThenInclude(a => a.Clinic)
+                .Include(k => k.Clinics)
+                .SingleOrDefaultAsync(k => k.Id == kittenId);
+            if (kitten is null) return null;
+
+            var card = new FullKittenCard()
+            {
+                Kitten = Mapper.Map<Kitten>(kitten),
+                Clinics = Mapper.Map<IReadOnlyCollection<Clinic>>(kitten.Clinics),
+                Analyzes = Mapper.Map<IReadOnlyCollection<IClinicAnalysis>>(kitten.Analysis)
+            };
+
+            return card;
         }
     }
 }
