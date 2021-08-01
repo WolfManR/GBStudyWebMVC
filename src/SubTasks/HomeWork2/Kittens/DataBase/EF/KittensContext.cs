@@ -10,6 +10,7 @@ namespace DataBase.EF
 
         public DbSet<Kitten> Kittens { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
+        public DbSet<Analysis> Analysis { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
