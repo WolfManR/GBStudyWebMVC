@@ -7,5 +7,6 @@
         public bool Paid { get; init; }
         public string Result { get; init; }
         public Patient Patient { get; init; }
+        public Clinic Clinic { get; init; }
     }
 }

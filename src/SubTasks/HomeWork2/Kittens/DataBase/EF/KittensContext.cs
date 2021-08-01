@@ -22,6 +22,10 @@ namespace DataBase.EF
                 .HasMany(p => p.Patients)
                 .WithMany(p => p.Clinics);
 
+            modelBuilder.Entity<Clinic>()
+                .HasMany(p => p.Analyzes)
+                .WithOne(p => p.Clinic);
+
             modelBuilder.Entity<Patient>()
                 .HasDiscriminator<string>("PatientType")
                 .HasValue<Kitten>("kitten");
