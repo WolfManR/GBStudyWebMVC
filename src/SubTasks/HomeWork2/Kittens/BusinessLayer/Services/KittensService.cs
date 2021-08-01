@@ -13,11 +13,15 @@ namespace BusinessLayer.Services
 {
     public class KittensService : Service<Kitten, KittenData, int, IKittensRepository>, IKittensService
     {
+        private readonly IKittenCardsRepository _cardsRepository;
+
         public KittensService(IKittensRepository repository,
                               IMapper mapper,
-                              IValidationService<Kitten> entityValidation) 
+                              IValidationService<Kitten> entityValidation,
+                              IKittenCardsRepository cardsRepository) 
             : base(repository, mapper, entityValidation)
         {
+            _cardsRepository = cardsRepository;
         }
 
         public async Task<IReadOnlyCollection<Kitten>> GetPage(int page, int pageSize)
@@ -42,6 +46,18 @@ namespace BusinessLayer.Services
         {
             var data = await Repository.ListClinicsWhereKittenRegistered(kittenId);
             return Mapper.Map<IEnumerable<Clinic>>(data);
+        }
+
+        public async Task<KittenCard> GetKittenCardFromClinic(int kittenId, int clinicId)
+        {
+            var data = await _cardsRepository.Get(kittenId, clinicId);
+            return Mapper.Map<KittenCard>(data);
+        }
+
+        public async Task<FullKittenCard> GetKittenFullCard(int kittenId)
+        {
+            var data = await _cardsRepository.Get(kittenId);
+            return Mapper.Map<FullKittenCard>(data);
         }
     }
 }
