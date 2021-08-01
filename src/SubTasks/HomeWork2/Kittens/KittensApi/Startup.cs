@@ -1,5 +1,4 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using BusinessLayer;
 using DataBase.EF;
@@ -18,12 +17,10 @@ using Microsoft.OpenApi.Models;
 
 using System.Text;
 using BusinessLayer.Abstractions.Models;
-using BusinessLayer.Abstractions.Validations;
 using KittensApi.Controllers.Requests;
 using KittensApi.Validations.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using KittensApi.Validations.Abstractions;
 
 namespace KittensApi
 {

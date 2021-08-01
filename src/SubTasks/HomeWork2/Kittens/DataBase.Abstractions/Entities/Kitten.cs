@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DataBase.Abstractions.Entities
+﻿namespace DataBase.Abstractions.Entities
 {
     public class Kitten : Patient
     {

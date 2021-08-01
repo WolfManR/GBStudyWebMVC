@@ -1,5 +1,4 @@
-﻿using System;
-using DataBase.EF;
+﻿using DataBase.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
