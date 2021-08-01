@@ -72,7 +72,7 @@ namespace KittensApi.Controllers
             return _mapper.Map<List<KittenGetResponse>>(data);
         }
 
-        [HttpGet("/page/{page:int}pagesize/{size:int}")]
+        [HttpGet("/page/{page:int}/pagesize/{size:int}")]
         public async Task<IEnumerable<KittenGetResponse>> GetPageAsync([FromRoute] int size, [FromRoute] int page)
         {
             var data = await _kittensService.GetPage(page, size);
@@ -86,7 +86,7 @@ namespace KittensApi.Controllers
             return data.Select(_mapper.Map<KittenGetResponse>);
         }
 
-        [HttpGet("/page/{page:int}pagesize/{size:int}/search")]
+        [HttpGet("/page/{page:int}/pagesize/{size:int}/search")]
         public async Task<IEnumerable<KittenGetResponse>> GetPageWithSearchAsync([FromRoute] int size, [FromRoute] int page, [FromQuery] KittenSearchRequest searchRequest)
         {
             var data = await _kittensService.GetPageFromSearch(page, size, _mapper.Map<KittenSearchData>(searchRequest));
@@ -98,6 +98,20 @@ namespace KittensApi.Controllers
         {
             var data = await _kittensService.ListClinicsWhereKittenRegistered(kittenId);
             return _mapper.Map<IEnumerable<ClinicGetResponse>>(data);
+        }
+
+        [HttpGet("card/{kittenId:int}/{clinicId:int}")]
+        public async Task<KittenCardFromClinicResponse> GetKittenCardFromClinic([FromRoute] int kittenId, [FromRoute] int clinicId)
+        {
+            var data = await _kittensService.GetKittenCardFromClinic(kittenId, clinicId);
+            return _mapper.Map<KittenCardFromClinicResponse>(data);
+        }
+
+        [HttpGet("card/{kittenId:int}")]
+        public async Task<KittenFullCardResponse> GetKittenFullCard([FromRoute] int kittenId)
+        {
+            var data = await _kittensService.GetKittenFullCard(kittenId);
+            return _mapper.Map<KittenFullCardResponse>(data);
         }
     }
 }
