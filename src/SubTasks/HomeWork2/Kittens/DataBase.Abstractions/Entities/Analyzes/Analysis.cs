@@ -6,7 +6,7 @@
         public string Name { get; init; }
         public bool Paid { get; init; }
         public string Result { get; init; }
-        public Patient Patient { get; init; }
-        public Clinic Clinic { get; init; }
+        public Patient Patient { get; set; }
+        public Clinic Clinic { get; set; }
     }
 }
