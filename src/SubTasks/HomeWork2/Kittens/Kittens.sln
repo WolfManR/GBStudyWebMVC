@@ -56,6 +56,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ValidationsCodes.txt = ValidationsCodes.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E8F65E21-5BDD-4A04-908F-0ABEE4B8BE21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittensApiTests", "Tests\KittensApiTests\KittensApiTests.csproj", "{8B655F19-54A4-4CBB-B409-6084E7EB05DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +134,10 @@ Global
 		{0170159E-8922-4236-9BBE-327FFCBF7E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0170159E-8922-4236-9BBE-327FFCBF7E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0170159E-8922-4236-9BBE-327FFCBF7E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B655F19-54A4-4CBB-B409-6084E7EB05DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B655F19-54A4-4CBB-B409-6084E7EB05DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B655F19-54A4-4CBB-B409-6084E7EB05DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B655F19-54A4-4CBB-B409-6084E7EB05DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +163,7 @@ Global
 		{12B77065-0FC1-4CE6-92F0-12BBFE8216E2} = {EDEEA8B4-4EA6-4806-9B3A-63F706440673}
 		{8603BF3B-5ABD-42E7-BD6D-85D797C2037A} = {72FF4967-4502-409E-ADCE-77511466A084}
 		{0170159E-8922-4236-9BBE-327FFCBF7E7F} = {44EFB044-5089-4551-884F-91BA786B7536}
+		{8B655F19-54A4-4CBB-B409-6084E7EB05DB} = {E8F65E21-5BDD-4A04-908F-0ABEE4B8BE21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27484E94-D878-4496-A8A0-51D732F8F088}
