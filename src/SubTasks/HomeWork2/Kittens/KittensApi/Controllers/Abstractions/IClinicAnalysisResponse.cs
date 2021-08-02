@@ -2,7 +2,7 @@
 
 namespace KittensApi.Controllers.Abstractions
 {
-    public interface IClinicAnalysisResponse
+    public interface IClinicAnalysisResponse : IAnalysisResponse
     {
         public ClinicGetResponse Clinic { get; init; }
     }

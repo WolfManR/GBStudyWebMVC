@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace KittensApi.Controllers
 {
     [Route("kittens")]
-    [Authorize(Policy = "UserOnly")]
+    //[Authorize(Policy = "UserOnly")]
     [ApiController]
     public class KittensStorageController : ControllerBase
     {
@@ -111,7 +111,8 @@ namespace KittensApi.Controllers
         public async Task<KittenFullCardResponse> GetKittenFullCard([FromRoute] int kittenId)
         {
             var data = await _kittensService.GetKittenFullCard(kittenId);
-            return _mapper.Map<KittenFullCardResponse>(data);
+            var result = _mapper.Map<KittenFullCardResponse>(data);
+            return result;
         }
     }
 }

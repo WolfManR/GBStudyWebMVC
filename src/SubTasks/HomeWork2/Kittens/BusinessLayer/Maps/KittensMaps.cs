@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using BusinessLayer.Abstractions.Models;
 using DataLayer.Abstractions.Filters;
-using KittenData = DataLayer.Abstractions.Entities.Kitten;
+using Data = DataLayer.Abstractions.Entities;
 
 namespace BusinessLayer.Maps
 {
@@ -9,8 +9,10 @@ namespace BusinessLayer.Maps
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.ForType<KittenData, Kitten>().TwoWays();
-            config.ForType<KittenSearchFilterData, KittenSearchData>();
+            config.ForType<Data::Kitten, Kitten>().TwoWays();
+            config.ForType<KittenSearchData, KittenSearchFilterData>();
+            config.ForType<Data::KittenCard, KittenCard>();
+            config.ForType<Data::FullKittenCard, FullKittenCard>();
         }
     }
 }

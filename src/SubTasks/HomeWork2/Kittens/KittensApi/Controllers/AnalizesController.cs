@@ -20,7 +20,7 @@ namespace KittensApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("inspection/kittenId/{kittenId:int}/clinicId/{clinicId:int}")]
+        [HttpPost("inspection/{kittenId:int}/{clinicId:int}")]
         public async Task<IActionResult> AssignAnalysisToKitten(
             [FromBody] InspectionAnalysisRequest request,
             [FromRoute] int clinicId,
@@ -33,7 +33,7 @@ namespace KittensApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("blood/kittenId/{kittenId:int}/clinicId/{clinicId:int}")]
+        [HttpPost("blood/{kittenId:int}/{clinicId:int}")]
         public async Task<IActionResult> AssignAnalysisToKitten(
             [FromBody] BloodAnalysisRequest request,
             [FromRoute] int clinicId,
