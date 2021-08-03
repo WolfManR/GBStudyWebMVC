@@ -6,7 +6,7 @@ namespace KittensApi.Controllers.Responses
     public class KittenFullCardResponse
     {
         public KittenGetResponse Kitten { get; init; }
-        public IReadOnlyCollection<ClinicGetResponse> Clinic { get; init; }
+        public IReadOnlyCollection<ClinicGetResponse> Clinics { get; init; }
         public IReadOnlyCollection<IClinicAnalysisResponse> Analyzes { get; init; }
     }
 }
