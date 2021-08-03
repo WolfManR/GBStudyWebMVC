@@ -15,7 +15,10 @@ namespace KittensApi.Maps
                 .Include<InspectionAnalysisRequest, InspectionAnalysis>();
 
             config.ForType<IAnalysis, IAnalysisResponse>()
-                .Include<IClinicAnalysis, IClinicAnalysisResponse>()
+                .Include<BloodAnalysis, BloodAnalysisGetResponse>()
+                .Include<InspectionAnalysis, InspectionAnalysisGetResponse>();
+
+            config.ForType<IClinicAnalysis, IClinicAnalysisResponse>()
                 .Include<BloodAnalysis, BloodAnalysisGetResponse>()
                 .Include<InspectionAnalysis, InspectionAnalysisGetResponse>();
         }
