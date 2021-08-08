@@ -21,7 +21,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-41", actual.Code);
+            Assert.Equal("BCL-41b", actual.Code);
             Assert.Equal(nameof(Clinic.Name), actual.PropertyName);
         }
 
@@ -35,7 +35,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-41", actual.Code);
+            Assert.Equal("BCL-41a", actual.Code);
             Assert.Equal(nameof(Clinic.Name), actual.PropertyName);
         }
 

@@ -22,7 +22,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-31", actual.Code);
+            Assert.Equal("BCL-31b", actual.Code);
             Assert.Equal(nameof(Kitten.Nickname), actual.PropertyName);
         }
 
@@ -39,7 +39,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-31", actual.Code);
+            Assert.Equal("BCL-31a", actual.Code);
             Assert.Equal(nameof(Kitten.Nickname), actual.PropertyName);
         }
 
@@ -72,7 +72,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-32", actual.Code);
+            Assert.Equal("BCL-32b", actual.Code);
             Assert.Equal(nameof(Kitten.Weight), actual.PropertyName);
         }
 
@@ -89,7 +89,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-32", actual.Code);
+            Assert.Equal("BCL-32a", actual.Code);
             Assert.Equal(nameof(Kitten.Weight), actual.PropertyName);
         }
 
@@ -122,7 +122,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-33", actual.Code);
+            Assert.Equal("BCL-33b", actual.Code);
             Assert.Equal(nameof(Kitten.Color), actual.PropertyName);
         }
 
@@ -139,7 +139,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-33", actual.Code);
+            Assert.Equal("BCL-33a", actual.Code);
             Assert.Equal(nameof(Kitten.Color), actual.PropertyName);
         }
 
@@ -172,7 +172,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-34", actual.Code);
+            Assert.Equal("BCL-34b", actual.Code);
             Assert.Equal(nameof(Kitten.Feed), actual.PropertyName);
         }
 
@@ -189,7 +189,7 @@ namespace BusinessLayerTests
 
             var actual = ValidationService.ValidateEntry(toTest)[0];
 
-            Assert.Equal("BCL-34", actual.Code);
+            Assert.Equal("BCL-34a", actual.Code);
             Assert.Equal(nameof(Kitten.Feed), actual.PropertyName);
         }
 
