@@ -11,11 +11,9 @@ namespace MigrationsLauncher
     {
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args).ConfigureAppConfiguration(
-            (host, builder) =>
-            {
-                builder.AddUserSecrets<Program>();
-            }).ConfigureServices(ConfigureServices);
+        public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(b => b.AddUserSecrets<Program>())
+            .ConfigureServices(ConfigureServices);
 
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {

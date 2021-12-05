@@ -6,31 +6,54 @@ using BusinessLayer.Abstractions.Services;
 using MapsterMapper;
 using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
+using Microsoft.AspNetCore.Authorization;
+using KittensApi.Validations.Abstractions;
 
 namespace KittensApi.Controllers
 {
     [Route("clinics")]
+    //[Authorize(Policy = "UserOnly")]
     [ApiController]
     public class ClinicsStorageController : ControllerBase
     {
         private readonly IClinicsService _clinicsService;
         private readonly IMapper _mapper;
+        private readonly IValidationService<ClinicCreateRequest> _createRequestValidator;
+        private readonly IValidationService<ClinicUpdateRequest> _updateRequestValidator;
 
-        public ClinicsStorageController(IClinicsService clinicsService, IMapper mapper)
+        public ClinicsStorageController(IClinicsService clinicsService,
+                                        IMapper mapper,
+                                        IValidationService<ClinicCreateRequest> createRequestValidator,
+                                        IValidationService<ClinicUpdateRequest> updateRequestValidator)
         {
             _clinicsService = clinicsService;
             _mapper = mapper;
+            _createRequestValidator = createRequestValidator;
+            _updateRequestValidator = updateRequestValidator;
         }
+
         [HttpPost]
-        public async Task CreateAsync(ClinicCreateRequest request)
+        public async Task<ClinicCreateResponse> CreateAsync(ClinicCreateRequest request)
         {
-            await _clinicsService.Add(_mapper.Map<Clinic>(request));
+            var failures = _createRequestValidator.ValidateEntry(request);
+            if (failures.Count > 0)
+            {
+                return new(failures, false);
+            }
+            var result = await _clinicsService.Add(_mapper.Map<Clinic>(request));
+            return new(_mapper.Map<IReadOnlyList<IOperationFailure>>(result.Failures), result.Succeed);
         }
 
         [HttpPut]
-        public async Task UpdateAsync([FromBody] ClinicUpdateRequest request)
+        public async Task<ClinicUpdateResponse> UpdateAsync([FromBody] ClinicUpdateRequest request)
         {
-            await _clinicsService.Update(_mapper.Map<Clinic>(request));
+            var failures = _updateRequestValidator.ValidateEntry(request);
+            if (failures.Count > 0)
+            {
+                return new(failures, false);
+            }
+            var result = await _clinicsService.Update(_mapper.Map<Clinic>(request));
+            return new(_mapper.Map<IReadOnlyList<IOperationFailure>>(result.Failures), result.Succeed);
         }
 
         [HttpDelete("{id:int}")]
