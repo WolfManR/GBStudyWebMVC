@@ -12,4 +12,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataBase.Abstractions\DataBase.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

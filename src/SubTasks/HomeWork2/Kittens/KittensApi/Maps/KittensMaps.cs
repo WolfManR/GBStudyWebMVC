@@ -1,6 +1,7 @@
-﻿using DataBase;
+﻿using BusinessLayer.Abstractions.Models;
 using KittensApi.Controllers.Requests;
 using KittensApi.Controllers.Responses;
+
 using Mapster;
 
 namespace KittensApi.Maps
@@ -11,6 +12,11 @@ namespace KittensApi.Maps
         {
             config.ForType<KittenCreateRequest, Kitten>().TwoWays();
             config.ForType<Kitten, KittenGetResponse>().TwoWays();
+            config.ForType<KittenUpdateRequest, Kitten>();
+            config.ForType<KittenSearchRequest, KittenSearchData>();
+
+            config.ForType<KittenCard, KittenCardFromClinicResponse>();
+            config.ForType<FullKittenCard, KittenFullCardResponse>();
         }
     }
 }
