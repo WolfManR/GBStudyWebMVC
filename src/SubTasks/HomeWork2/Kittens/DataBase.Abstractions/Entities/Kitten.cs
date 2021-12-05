@@ -1,8 +1,7 @@
 ﻿namespace DataBase.Abstractions.Entities
 {
-    public class Kitten
+    public class Kitten : Patient
     {
-        public int Id { get; set; }
         public string Nickname { get; set; }
         public double Weight { get; set; }
         public string Color { get; set; }

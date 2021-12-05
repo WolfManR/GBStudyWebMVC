@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Abstractions.Models;
 using BusinessLayer.Abstractions.Services;
+using BusinessLayer.Abstractions.Validations;
 using DataLayer.Abstractions.Filters;
 using DataLayer.Abstractions.Repositories;
 using KittenData = DataLayer.Abstractions.Entities.Kitten;
@@ -10,54 +11,53 @@ using MapsterMapper;
 
 namespace BusinessLayer.Services
 {
-    public class KittensService : IKittensService
+    public class KittensService : Service<Kitten, KittenData, int, IKittensRepository>, IKittensService
     {
-        private readonly IKittensRepository _repository;
-        private readonly IMapper _mapper;
+        private readonly IKittenCardsRepository _cardsRepository;
 
-        public KittensService(IKittensRepository repository, IMapper mapper)
+        public KittensService(IKittensRepository repository,
+                              IMapper mapper,
+                              IValidationService<Kitten> entityValidation,
+                              IKittenCardsRepository cardsRepository) 
+            : base(repository, mapper, entityValidation)
         {
-            _repository = repository;
-            _mapper = mapper;
-        }
-
-        public async Task<IReadOnlyCollection<Kitten>> Get()
-        {
-            var data = await _repository.Get();
-            return _mapper.Map<List<Kitten>>(data);
-        }
-
-        public Task Add(Kitten kitten)
-        {
-            return _repository.Add(_mapper.Map<KittenData>(kitten));
-        }
-
-        public Task Update(Kitten kitten)
-        {
-            return _repository.Update(_mapper.Map<KittenData>(kitten));
-        }
-
-        public Task Delete(int id)
-        {
-            return _repository.Delete(id);
+            _cardsRepository = cardsRepository;
         }
 
         public async Task<IReadOnlyCollection<Kitten>> GetPage(int page, int pageSize)
         {
-            var data = await _repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize });
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(new PageFilter(page, pageSize));
+            return data.Select(Mapper.Map<Kitten>).ToList();
         }
 
         public async Task<IReadOnlyCollection<Kitten>> SearchFor(KittenSearchData searchData)
         {
-            var data = await _repository.GetFiltered(searchFilterData: _mapper.Map<KittenSearchFilterData>(searchData));
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(searchFilterData: Mapper.Map<KittenSearchFilterData>(searchData));
+            return data.Select(Mapper.Map<Kitten>).ToList();
         }
 
         public async Task<IReadOnlyCollection<Kitten>> GetPageFromSearch(int page, int pageSize, KittenSearchData searchData)
         {
-            var data = await _repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize }, _mapper.Map<KittenSearchFilterData>(searchData));
-            return data.Select(_mapper.Map<Kitten>).ToList();
+            var data = await Repository.GetFiltered(new PageFilter(page, pageSize), Mapper.Map<KittenSearchFilterData>(searchData));
+            return data.Select(Mapper.Map<Kitten>).ToList();
+        }
+
+        public async Task<IEnumerable<Clinic>> ListClinicsWhereKittenRegistered(int kittenId)
+        {
+            var data = await Repository.ListClinicsWhereKittenRegistered(kittenId);
+            return Mapper.Map<IEnumerable<Clinic>>(data);
+        }
+
+        public async Task<KittenCard> GetKittenCardFromClinic(int kittenId, int clinicId)
+        {
+            var data = await _cardsRepository.Get(kittenId, clinicId);
+            return Mapper.Map<KittenCard>(data);
+        }
+
+        public async Task<FullKittenCard> GetKittenFullCard(int kittenId)
+        {
+            var data = await _cardsRepository.Get(kittenId);
+            return Mapper.Map<FullKittenCard>(data);
         }
     }
 }

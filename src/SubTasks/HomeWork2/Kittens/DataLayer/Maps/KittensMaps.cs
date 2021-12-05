@@ -1,6 +1,6 @@
-﻿using DataBase.Abstractions.Entities;
-using Mapster;
-using KittenData = DataLayer.Abstractions.Entities.Kitten;
+﻿using Mapster;
+using DataLayer.Abstractions.Entities;
+using Data = DataBase.Abstractions.Entities;
 
 namespace DataLayer.Maps
 {
@@ -8,7 +8,7 @@ namespace DataLayer.Maps
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.ForType<KittenData, Kitten>().TwoWays();
+            config.ForType<Data::Kitten, Kitten>().TwoWays();
         }
     }
 }
