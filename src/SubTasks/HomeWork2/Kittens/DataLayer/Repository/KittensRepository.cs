@@ -27,7 +27,7 @@ namespace DataLayer.Repository
             if (!await Context.Kittens.AnyAsync()) return Array.Empty<Kitten>();
             var query = Context.Kittens.AsQueryable();
 
-            if (pageFilter != PageFilter.Empty())
+            if (pageFilter is not null)
             {
                 query = query.GetPage(pageFilter).OrderByDescending(k => k.Id);
             }

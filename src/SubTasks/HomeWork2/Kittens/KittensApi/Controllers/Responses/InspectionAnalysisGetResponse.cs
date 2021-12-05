@@ -2,7 +2,7 @@
 
 namespace KittensApi.Controllers.Responses
 {
-    public class InspectionAnalysisGetResponse : IClinicAnalysisResponse
+    public class InspectionAnalysisGetResponse : IClinicAnalysisResponse, IAnalysisResponse
     {
         public int Id { get; init; }
         public string Name { get; init; }

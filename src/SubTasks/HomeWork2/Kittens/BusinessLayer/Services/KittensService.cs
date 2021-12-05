@@ -26,7 +26,7 @@ namespace BusinessLayer.Services
 
         public async Task<IReadOnlyCollection<Kitten>> GetPage(int page, int pageSize)
         {
-            var data = await Repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize });
+            var data = await Repository.GetFiltered(new PageFilter(page, pageSize));
             return data.Select(Mapper.Map<Kitten>).ToList();
         }
 
@@ -38,7 +38,7 @@ namespace BusinessLayer.Services
 
         public async Task<IReadOnlyCollection<Kitten>> GetPageFromSearch(int page, int pageSize, KittenSearchData searchData)
         {
-            var data = await Repository.GetFiltered(new PageFilter() { Page = page, Size = pageSize }, Mapper.Map<KittenSearchFilterData>(searchData));
+            var data = await Repository.GetFiltered(new PageFilter(page, pageSize), Mapper.Map<KittenSearchFilterData>(searchData));
             return data.Select(Mapper.Map<Kitten>).ToList();
         }
 

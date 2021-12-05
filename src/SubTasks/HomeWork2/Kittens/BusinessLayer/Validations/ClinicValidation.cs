@@ -10,8 +10,8 @@ namespace BusinessLayer.Validations
         public ClinicValidation()
         {
             RuleFor(c => c.Name)
-                .NotNull().WithMessage("Clinic name cannot be empty").WithErrorCode("BCL-41")
-                .NotEmpty().WithMessage("Clinic name cannot be empty").WithErrorCode("BCL-41");
+                .NotNull().WithMessage("Clinic name cannot be empty").WithErrorCode("BCL-41a")
+                .NotEmpty().WithMessage("Clinic name cannot be empty").WithErrorCode("BCL-41b");
         }
     }
 }
