@@ -1,0 +1,10 @@
+BCL-41 "Clinic name cannot be empty"
+
+BCL-31 "Nickname cannot be empty"
+BCL-32 "Weight cannot be lower 0 or grater than 40"
+BCL-33 "Kitten cannot be transparent"
+BCL-34 "Kitten must something to eat"
+
+TODO: 
+	Codes for validation errors
+	specify layers codes

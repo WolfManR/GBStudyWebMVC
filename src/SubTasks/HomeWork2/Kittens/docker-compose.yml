@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  kittensapi:
+    image: ${DOCKER_REGISTRY-}kittensapi
+    build:
+      context: .
+      dockerfile: KittensApi/Dockerfile
+    environment:
+       ConnectionStrings__Default: "Server=localhost;Port=5432;Database=kittens;User Id=root;Password=root"
+    depends_on:
+      - db
+      - migrationsLauncher
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    ports:
+    - 5432:5432
+    volumes:
+    - ./pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
+
+  migrationslauncher:
+    image: ${DOCKER_REGISTRY-}migrationslauncher
+    build:
+      context: .
+      dockerfile: MigrationsLauncher/Dockerfile
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
