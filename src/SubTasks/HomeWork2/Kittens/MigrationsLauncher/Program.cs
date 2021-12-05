@@ -1,5 +1,4 @@
-﻿using System;
-using DataBase.EF;
+﻿using DataBase.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,9 +12,7 @@ namespace MigrationsLauncher
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
-#if DEBUG
-            .UseEnvironment("Development")
-#endif
+            .ConfigureAppConfiguration(b => b.AddUserSecrets<Program>())
             .ConfigureServices(ConfigureServices);
 
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)

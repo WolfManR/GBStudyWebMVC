@@ -15,9 +15,10 @@ namespace BusinessLayer
         {
             services.AddTransient<IKittensService, KittensService>();
             services.AddTransient<IClinicsService, ClinicsService>();
+            services.AddTransient<IAnalysisService, AnalysisService>();
             services.AddSingleton<IValidationService<Clinic>, ClinicValidation>();
             services.AddSingleton<IValidationService<Kitten>, KittenValidation>();
-            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicsMaps());
+            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicsMaps(), new AnalysisMaps());
             return services;
         }
     }

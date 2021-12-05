@@ -12,7 +12,7 @@ using KittensApi.Validations.Abstractions;
 namespace KittensApi.Controllers
 {
     [Route("clinics")]
-    [Authorize(Policy = "UserOnly")]
+    //[Authorize(Policy = "UserOnly")]
     [ApiController]
     public class ClinicsStorageController : ControllerBase
     {

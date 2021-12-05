@@ -13,7 +13,9 @@ namespace DataLayer
         {
             services.AddTransient<IKittensRepository, KittensRepository>();
             services.AddTransient<IClinicsRepository, ClinicsRepository>();
-            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicMaps());
+            services.AddTransient<IAnalysisRepository, AnalysisRepository>();
+            services.AddTransient<IKittenCardsRepository, KittensRepository>();
+            TypeAdapterConfig.GlobalSettings.Apply(new KittensMaps(), new ClinicMaps(), new AnalysisMaps());
             return services;
         }
     }

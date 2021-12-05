@@ -2,37 +2,18 @@
 
 namespace DataLayer.Abstractions.Filters
 {
-    public readonly struct PageFilter : IEquatable<PageFilter>
+    public class PageFilter
     {
-        public int Page { get; init; }
-        public int Size { get; init; }
-
-        public static PageFilter Empty() => new();
-
-        public override bool Equals(object obj)
+        public PageFilter(int page, int pageSize)
         {
-            return obj is PageFilter filter && Equals(filter);
+            if (page < 1) throw new ArgumentException("Page cannot be lower 1");
+            if (pageSize < 1) throw new ArgumentException("Size of page cannot be lower 1");
+
+            Page = page;
+            PageSize = pageSize;
         }
 
-        public bool Equals(PageFilter other)
-        {
-            return Page == other.Page &&
-                   Size == other.Size;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Page, Size);
-        }
-
-        public static bool operator ==(PageFilter left, PageFilter right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(PageFilter left, PageFilter right)
-        {
-            return !(left == right);
-        }
+        public int Page { get; }
+        public int PageSize { get; }
     }
 }
