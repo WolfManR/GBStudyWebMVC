@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DataBase.Abstractions.Entities.Analyzes;
 
 namespace DataBase.Abstractions.Entities
 {
@@ -8,6 +9,7 @@ namespace DataBase.Abstractions.Entities
 
         public string Name { get; set; }
 
-        public ICollection<Kitten> Kittens { get; init; }
+        public ICollection<Patient> Patients { get; init; }
+        public ICollection<Analysis> Analyzes { get; init; }
     }
 }

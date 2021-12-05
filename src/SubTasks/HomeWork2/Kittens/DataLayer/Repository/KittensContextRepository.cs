@@ -13,44 +13,40 @@ namespace DataLayer.Repository
 {
     public abstract class KittensContextRepository<TEntity, TDbEntity, TId> : IRepository<TEntity, TId> where TEntity : IEntity<TId> where TDbEntity : class, dbEntities::IEntity<TId>
     {
-        protected readonly IDbContextFactory<KittensContext> ContextFactory;
+        protected readonly KittensContext Context;
         protected readonly IMapper Mapper;
 
-        protected KittensContextRepository(IDbContextFactory<KittensContext> contextFactory, IMapper mapper)
+        protected KittensContextRepository(KittensContext context, IMapper mapper)
         {
-            ContextFactory = contextFactory;
+            Context = context;
             Mapper = mapper;
         }
 
         public async Task<IEnumerable<TEntity>> Get()
         {
-            await using var context = ContextFactory.CreateDbContext();
-            return await context.Set<TDbEntity>().AsNoTracking().ProjectToType<TEntity>().ToListAsync();
+            return await Context.Set<TDbEntity>().AsNoTracking().ProjectToType<TEntity>().ToListAsync();
         }
 
         public async Task Add(TEntity entity)
         {
-            await using var context = ContextFactory.CreateDbContext();
             var entry = Mapper.Map<TDbEntity>(entity);
-            await context.AddAsync(entry);
-            await context.SaveChangesAsync();
+            await Context.AddAsync(entry);
+            await Context.SaveChangesAsync();
         }
 
         public async Task Delete(TId id)
         {
-            await using var context = ContextFactory.CreateDbContext();
-            var entity = await context.Set<TDbEntity>().FirstOrDefaultAsync(e => Equals(e.Id, id));
+            var entity = await Context.Set<TDbEntity>().FirstOrDefaultAsync(e => Equals(e.Id, id));
             if (entity is null) return;
-            context.Entry(entity).State = EntityState.Deleted;
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            Context.Entry(entity).State = EntityState.Deleted;
+            await Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task Update(TEntity entity)
         {
-            await using var context = ContextFactory.CreateDbContext();
             var entry = Mapper.Map<TDbEntity>(entity);
-            context.Update(entry);
-            await context.SaveChangesAsync();
+            Context.Update(entry);
+            await Context.SaveChangesAsync();
         }
     }
 }

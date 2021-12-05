@@ -1,5 +1,4 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using BusinessLayer;
 using DataBase.EF;
@@ -18,6 +17,8 @@ using Microsoft.OpenApi.Models;
 
 using System.Text;
 using BusinessLayer.Abstractions.Models;
+using KittensApi.Controllers.Requests;
+using KittensApi.Validations.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,7 +32,7 @@ namespace KittensApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextFactory<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<KittensContext>(options=>options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services
                 .AddDataLayer()
                 .AddBusinessLayer();
@@ -103,6 +104,11 @@ namespace KittensApi
                     }
                 });
             });
+
+            services.AddSingleton<Validations.Abstractions.IValidationService<ClinicCreateRequest>, ClinicCreateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<ClinicUpdateRequest>, ClinicUpdateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<KittenCreateRequest>, KittenCreateRequestValidator>();
+            services.AddSingleton<Validations.Abstractions.IValidationService<KittenUpdateRequest>, KittenUpdateRequestValidator>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
